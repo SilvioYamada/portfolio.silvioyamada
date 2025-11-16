@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silvio Cristiano Yamada - UI/UX Designer</title>
+    
+    <!-- Importação da Fonte (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. Configurações Globais (Reset e Tema) --- */
+        :root {
+            --color-background: #121212;
+            --color-surface: #1E1E1E;
+            --color-primary: #00A3FF;
+            --color-accent-1: #FF3366;
+            --color-accent-2: #FFCC00;
+            --color-accent-3: #66FF66;
+            --color-text-primary: #F0F0F0;
+            --color-text-secondary: #A0A0A0;
+            --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --border-radius-card: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(
+                90deg,
+                var(--color-primary),
+                var(--color-accent-1),
+                var(--color-accent-2),
+                var(--color-accent-3),
+                var(--color-primary)
+            );
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-animation 18s linear infinite alternate;
+            display: block; 
+            margin: 0 auto 20px auto; 
+            max-width: 100%;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+            max-width: 700px;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* --- 2. Cabeçalho (Header) e Navegação --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Foto de Perfil com Borda Animada */
+        .logo-profile {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-profile::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(
+                90deg,
+                var(--color-primary),
+                var(--color-accent-1),
+                var(--color-accent-2),
+                var(--color-accent-3),
+                var(--color-primary)
+            );
+            background-size: 400% 100%;
+            animation: gradient-animation 15s linear infinite;
+            z-index: -1;
+        }
+
+        .logo-profile img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 3px solid var(--color-background);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #fff;
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* --- 3. Botões (CTA) --- */
+        .cta-button {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--color-primary);
+            color: #121212;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid var(--color-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--color-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 163, 255, 0.2);
+            border-color: var(--color-primary);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--color-text-primary);
+            border-color: var(--color-text-secondary);
+            margin-left: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--color-primary);
+            color: #121212;
+            border-color: var(--color-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 163, 255, 0.4);
+        }
+
+        /* Ícone de seta para link externo */
+        .cta-button.external-link::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-left: 4px;
+        }
+
+        .cta-button.external-link:hover::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300A3FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+        }
+
+        /* Ícone do LinkedIn no botão */
+        .cta-button.linkedin-link::before {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .cta-button.linkedin-link:hover::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23121212'%3E%3Cpath d='M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z'/%3E%3C/svg%3E");
+        }
+
+        /* --- 4. Seção Hero --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 163, 255, 0.1), transparent 30%),
+                        radial-gradient(circle at 80% 30%, rgba(0, 163, 255, 0.1), transparent 30%);
+        }
+
+        #hero .container {
+            padding: 0;
+        }
+
+        #hero h1 {
+            max-width: 800px;
+            font-size: 3.5rem; 
+            letter-spacing: -1px;
+            background: linear-gradient(
+                90deg,
+                var(--color-primary),
+                var(--color-accent-1),
+                var(--color-accent-2),
+                var(--color-accent-3),
+                var(--color-primary)
+            );
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; 
+            animation: gradient-animation 15s ease infinite alternate; 
+        }
+
+        #hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+        }
+
+        #hero .cta-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* --- 5. Seção Sobre (Perfil) --- */
+        #about .container {
+            text-align: center;
+        }
+
+        #about p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-top: 50px;
+        }
+        
+        .skill-card {
+            background: var(--color-surface);
+            padding: 30px; 
+            border-radius: var(--border-radius-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--color-primary);
+        }
+        
+        .skill-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+
+        .skill-card ul li {
+            position: relative;
+            padding-left: 25px;
+            color: var(--color-text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .skill-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+        
+        /* --- 6. Seção Portfólio (Slider Moderno) --- */
+        #portfolio .container {
+            max-width: 1200px;
+        }
+        
+        .modern-portfolio-slider {
+            position: relative;
+            margin: 50px auto;
+            max-width: 100%;
+            padding: 0 50px;
+        }
+        
+        .slider-main-view {
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            width: fit-content;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .portfolio-card {
+            flex-shrink: 0;
+            width: 100%;
+            display: block;
+            position: relative;
+            aspect-ratio: 16 / 9; 
+            overflow: hidden;
+            background: var(--color-surface);
+            transition: opacity 0.3s ease; 
+            cursor: pointer;
+            border-radius: 0;
+        }
+        
+        .portfolio-card picture,
+        .portfolio-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease-out;
+        }
+        
+        .portfolio-card:hover picture img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 40px;
+            background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
+            transition: background 0.4s ease-out;
+            transform: translateY(0);
+        }
+        
+        .portfolio-card:hover .portfolio-overlay {
+            background: linear-gradient(0deg, rgba(0, 163, 255, 0.8) 0%, rgba(0, 163, 255, 0.5) 40%, transparent 100%);
+        }
+
+        .portfolio-overlay h3 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #fff;
+        }
+        .portfolio-overlay p {
+            font-size: 1.1rem;
+            margin: 0;
+            color: #E0E0E0;
+        }
+
+        .slider-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-control:hover {
+            opacity: 1;
+            background: var(--color-primary);
+            color: #121212;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .slider-control.prev-btn {
+            left: 0;
+        }
+
+        .slider-control.next-btn {
+            right: 0;
+        }
+
+        .slider-control svg {
+            width: 60%;
+            height: 60%;
+        }
+
+        .slider-indicators {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--color-text-secondary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            border: 2px solid transparent;
+        }
+
+        .indicator-dot.active {
+            width: 12px;
+            height: 12px;
+            background: var(--color-primary);
+            opacity: 1;
+            border-color: #fff;
+        }
+        
+        .portfolio-cta {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* --- 7. Seção Experiência (CARDS) --- */
+        #experience {
+            background: var(--color-surface);
+        }
+        
+        #experience h2 {
+            margin-bottom: 50px;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .experience-card {
+            background: linear-gradient(135deg, var(--color-surface) 0%, #2a2a2a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--color-primary);
+        }
+
+        .experience-card h3 {
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+        }
+        
+        .experience-card h4 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .experience-card .company-info {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--color-accent-3);
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+        }
+        
+        .experience-card .meta {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 15px;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+        
+        .experience-card .meta span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .experience-card .description {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+        }
+
+        /* Botão Ver Mais nos Cards de Experiência */
+        .experience-card .view-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .experience-card .view-more-btn:hover {
+            background: var(--color-primary);
+            color: #121212;
+            transform: translateX(3px);
+            box-shadow: 0 3px 10px rgba(0, 163, 255, 0.3);
+        }
+
+        .experience-card .view-more-btn::after {
+            content: '→';
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .experience-card .view-more-btn:hover::after {
+            transform: translateX(3px);
+        }
+
+        /* --- 8. Seção Contato --- */
+        #contact .container {
+            text-align: center;
+        }
+        
+        #contact p {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 1px solid var(--color-primary);
+            border-radius: 50px;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            background: var(--color-primary);
+            color: var(--color-background);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 163, 255, 0.4);
+        }
+
+        /* Botão LinkedIn */
+        .contact-links a[href*="linkedin"] {
+            background: #0077B5;
+            color: #fff;
+            border-color: #0077B5;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-links a[href*="linkedin"]::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .contact-links a[href*="linkedin"]:hover {
+            background: #005885;
+            color: #fff;
+            border-color: #005885;
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.4);
+        }
+
+        /* Botão WhatsApp */
+        .contact-links a[href*="wa.me"] {
+            background: #25D366;
+            color: #fff;
+            border-color: #25D366;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-links a[href*="wa.me"]::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .contact-links a[href*="wa.me"]:hover {
+            background: #1DA851;
+            color: #fff;
+            border-color: #1DA851;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        /* --- 9. Rodapé --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* --- 10. Animações de Scroll (Fade-in) --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- 11. Responsividade (Mobile) --- */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            #hero {
+                text-align: center;
+                min-height: 80vh;
+            }
+
+            .cta-button {
+                width: 100%;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            
+            .cta-button.secondary {
+                margin-left: 0;
+            }
+            
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modern-portfolio-slider {
+                padding: 0 10px; 
+            }
+            
+            .slider-control.prev-btn {
+                left: 0;
+            }
+    
+            .slider-control.next-btn {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#hero" class="logo" role="banner">
+            <div class="logo-profile">
+                <img src="https://github.com/user-attachments/assets/9c48bbf9-4eb8-4c8f-8e4d-f239db35d0ec" alt="Silvio Cristiano Yamada">
+            </div>
+            <span>Silvio Cristiano Yamada | UI/UX Designer</span>
+        </a>
+        <nav aria-label="Navegação Principal">
+            <ul>
+                <li><a href="#hero" class="active">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#experience">Experiência</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section id="hero">
+            <div class="container fade-in-section">
+                <h1>Olá, eu sou Silvio.
+                    <br>Eu transformo complexidade em experiências digitais que geram resultados.</h1>
+                <p>Com 17 anos de experiência, meu foco é criar soluções que unem as necessidades dos usuários aos objetivos do seu negócio.</p>
+                <div class="cta-buttons">
+                    <a href="https://www.behance.net/silvioyamada" target="_blank" rel="noopener noreferrer" class="cta-button external-link">Veja Meu Portfólio</a>
+                    <a href="https://www.linkedin.com/in/silvioyamada" target="_blank" rel="noopener noreferrer" class="cta-button secondary linkedin-link">Conecte-se no LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="page-section">
+            <div class="container fade-in-section">
+                <h2>O que eu trago para a mesa</h2>
+                <p>Minha paixão está em todo o ciclo: da pesquisa e validação de necessidades de usuários à criação de interfaces atraentes e funcionais.</p>
+                
+                <div class="skills-grid">
+                    <article class="skill-card">
+                        <h3>Foco no Usuário</h3>
+                        <ul>
+                            <li>Entrevistas e Pesquisa</li>
+                            <li>Testes de Usabilidade</li>
+                            <li>Criação de User Journeys</li>
+                            <li>Desenvolvimento de Personas</li>
+                        </ul>
+                    </article>
+                    <article class="skill-card">
+                        <h3>Habilidade Técnica</h3>
+                        <ul>
+                            <li>Figma</li>
+                            <li>Adobe XD & Photoshop</li>
+                            <li>Adobe Illustrator</li>
+                            <li>Aplicação de Design Systems</li>
+                        </ul>
+                    </article>
+                    <article class="skill-card">
+                        <h3>Resultados de Negócio</h3>
+                        <ul>
+                            <li>Otimização de fluxos de checkout</li>
+                            <li>Melhoria em taxas de conversão</li>
+                            <li>Design de apps B2B complexos</li>
+                            <li>Soluções para clientes internacionais</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="portfolio" class="page-section">
+            <div class="container fade-in-section">
+                <h2>Portfólio Seletivo</h2>
+                <p style="text-align: center; margin: 0 auto 50px auto;">Uma seleção de trabalhos que demonstram meu processo, da pesquisa ao pixel final.</p>
+                
+                <div class="modern-portfolio-slider" id="portfolioSlider">
+                    <div class="slider-main-view">
+                        <div class="slider-track">
+                            
+                            <a href="https://www.behance.net/gallery/238048525/Editor-de-Websites-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide">
+                                <picture>
+                                    <img src="https://placehold.co/1600x900/1e1e1e/00A3FF?text=Website+Builder" alt="Dashboard de Gerenciamento B2B Wordpress PRO" loading="lazy">
+                                </picture>
+                                <div class="portfolio-overlay">
+                                    <h3>Ferramenta Drag-and-Drop | Builderall Website Builder</h3>
+                                    <p>Projeto de reestruturação de UI/UX para editor de websites, focado na usabilidade e performance.</p>
+                                </div>
+                            </a>
+        
+                            <a href="https://www.behance.net/gallery/123120797/Booking-Sistema-de-Agendamento-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide">
+                                <picture>
+                                    <img src="https://placehold.co/1600x900/1e1e1e/FF3366?text=Booking+System" alt="Sistema de Agendamento" loading="lazy">
+                                </picture>
+                                <div class="portfolio-overlay">
+                                    <h3>Booking | Sistema de Agendamento | Builderall</h3>
+                                    <p>Desenvolvimento de um sistema completo de agendamento online para diversos nichos de mercado.</p>
+                                </div>
+                            </a>
+        
+                            <a href="https://www.behance.net/gallery/236055417/Chatbot-WhatsApp-Launch-Manager-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide">
+                                <picture>
+                                    <img src="https://placehold.co/1600x900/1e1e1e/FFCC00?text=WhatsApp+CRM" alt="Ferramenta de Comunicação Corporativa" loading="lazy">
+                                </picture>
+                                <div class="portfolio-overlay">
+                                    <h3>Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager</h3>
+                                    <p>Criação de interface de gestão de leads e automação de comunicação via WhatsApp.</p>
+                                </div>
+                            </a>
+                            
+                            <a href="https://www.behance.net/gallery/169477571/Time-de-Basquetebol-Noruegues-Bergen-Elite-Basketball" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide">
+                                <picture>
+                                    <img src="https://placehold.co/1600x900/1e1e1e/66FF66?text=Bergen+Elite" alt="Website Esportivo Bergen Elite" loading="lazy">
+                                </picture>
+                                <div class="portfolio-overlay">
+                                    <h3>Website | Time de Basquetebol Norueguês | Bergen Elite Basketball</h3>
+                                    <p>Website Esportivo (Cliente da Noruega) com foco em engajamento de fãs e notícias da equipe.</p>
+                                </div>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    
+                    <button class="slider-control prev-btn" aria-label="Slide Anterior">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="slider-control next-btn" aria-label="Próximo Slide">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                    
+                    <div class="slider-indicators"></div>
+                    
+                </div>
+                
+                <div class="portfolio-cta">
+                    <a href="https://www.behance.net/silvioyamada" target="_blank" rel="noopener noreferrer" class="cta-button">Ver Portfólio Completo no Behance</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="page-section">
+            <div class="container fade-in-section">
+                <h2>Experiência Comprovada</h2>
+                
+                <div class="experience-grid">
+
+                    <article class="experience-card">
+                        <h3>Senior User Experience Designer</h3>
+                        <h4>Builderall</h4>
+                        <p class="company-info">A Builderall é uma plataforma de marketing digital completa que oferece diversas ferramentas em um único ambiente, com o objetivo de ajudar empreendedores e empresas a crescerem online.</p>
+                        <div class="meta">
+                            <span>Duração: dez 2014 - out 2025 (10 anos e 11 meses)</span>
+                            <span>Localização: Orlando, Flórida (Remoto)</span>
+                        </div>
+                        <p class="description">
+                            Responsável pelo design e usabilidade de uma suíte de 50+ ferramentas de marketing digital. Liderei o redesign de produtos-chave, resultando em uma melhoria significativa na retenção e satisfação do usuário.
+                        </p>
+                        <a href="https://www.builderall.com" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+
+                    <article class="experience-card">
+                        <h3>Designer Gráfico</h3>
+                        <h4>Li Modas Oficial</h4>
+                        <p class="company-info">A Li Modas Oficial é uma loja virtual especializada em vestidos temáticos infantis e juvenis, oferecendo produtos no atacado e varejo para todo o Brasil e exterior.</p>
+                        <div class="meta">
+                            <span>Duração: nov 2018 - out 2025 (7 anos)</span>
+                            <span>Localização: Marília e Região, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Criação de toda a identidade visual e materiais de marketing digital para loja virtual especializada em moda infantil e juvenil, impulsionando a presença de marca em mídias sociais.
+                        </p>
+                        <a href="https://www.limodasoficial.com.br" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+                    
+                    <article class="experience-card">
+                        <h3>Web Designer</h3>
+                        <h4>Admake</h4>
+                        <p class="company-info">A Admake é uma agência especializada em e-commerce e marketing digital.</p>
+                        <div class="meta">
+                            <span>Duração: mai 2013 - dez 2013 (8 meses)</span>
+                            <span>Localização: Marília, São Paulo, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Desenvolvimento de layouts e front-end para websites institucionais e campanhas de marketing digital de clientes da agência, garantindo a performance visual e técnica.
+                        </p>
+                        <a href="https://www.admake.com.br" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+
+                    <article class="experience-card">
+                        <h3>Gráfico & Web Designer</h3>
+                        <h4>Horizon Marketing</h4>
+                        <p class="company-info">A Horizon Marketing é uma empresa especializada em marketing para varejo.</p>
+                        <div class="meta">
+                            <span>Duração: fev 2012 - mai 2013 (1 ano e 4 meses)</span>
+                            <span>Localização: Marília, São Paulo, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Focado na criação de identidades visuais de marca e design de interfaces para websites e landing pages, garantindo a consistência da marca no ambiente digital.
+                        </p>
+                    </article>
+                    
+                    <article class="experience-card">
+                        <h3>Gráfico & Web Designer</h3>
+                        <h4>FISK Marilia</h4>
+                        <p class="company-info">A FISK Marília é uma escola de idiomas que oferece cursos de inglês e espanhol.</p>
+                        <div class="meta">
+                            <span>Duração: fev 2010 - out 2010 (9 meses)</span>
+                            <span>Localização: Marília, São Paulo, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Produção de materiais gráficos promocionais (folhetos, cartazes), design de anúncios e atualização do website institucional da escola para suporte às campanhas de matrícula.
+                        </p>
+                        <a href="https://www.fisk.com.br" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+
+                    <article class="experience-card">
+                        <h3>Web Designer</h3>
+                        <h4>Tray</h4>
+                        <p class="company-info">A Tray é uma plataforma de e-commerce robusta, pertencente à Locaweb, que facilita a criação e gestão de lojas virtuais.</p>
+                        <div class="meta">
+                            <span>Duração: out 2008 - set 2010 (2 anos)</span>
+                            <span>Localização: Marília, São Paulo, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Criação de layouts de e-commerce e banners promocionais, garantindo a atração visual e a performance de vendas para lojas virtuais, otimizando a experiência do usuário em plataformas de comércio eletrônico.
+                        </p>
+                        <a href="https://www.tray.com.br" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+
+                    <article class="experience-card">
+                        <h3>Web Designer / Fotografia</h3>
+                        <h4>Red Nose</h4>
+                        <p class="company-info">A loja Red Nose é uma marca de moda masculina com estilo urbano, esportivo e casual.</p>
+                        <div class="meta">
+                            <span>Duração: jan 2008 - out 2008 (10 meses)</span>
+                            <span>Localização: Marília, São Paulo, Brasil</span>
+                        </div>
+                        <p class="description">
+                            Responsável pelo design web e fotografia de produtos para marca de moda masculina, criando identidade visual consistente e material fotográfico de alta qualidade para catálogos e campanhas digitais.
+                        </p>
+                        <a href="https://www.rednose.com.br" target="_blank" rel="noopener noreferrer" class="view-more-btn">Ver Site</a>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section">
+            <div class="container fade-in-section">
+                <h2>Vamos Transformar Seus Desafios em Sucesso?</h2>
+                <p>Estou sempre aberto a novas oportunidades e projetos que exijam uma combinação de visão de design e profundidade técnica. Entre em contato!</p>
+                
+                <div class="contact-links">
+                    <a href="https://www.linkedin.com/in/silvioyamada" class="cta-button" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://wa.me/5514999999999" class="cta-button" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>Desenvolvido por Silvio Cristiano Yamada &copy; 2025. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initPortfolioSlider();
+            initScrollAnimations();
+            initNavScrollSpy();
+        });
+
+        function initPortfolioSlider() {
+            const sliderContainer = document.getElementById('portfolioSlider');
+            if (!sliderContainer) return;
+
+            const track = sliderContainer.querySelector('.slider-track');
+            const slides = sliderContainer.querySelectorAll('.slider-slide');
+            const prevBtn = sliderContainer.querySelector('.prev-btn');
+            const nextBtn = sliderContainer.querySelector('.next-btn');
+            const indicatorsContainer = sliderContainer.querySelector('.slider-indicators');
+            const view = sliderContainer.querySelector('.slider-main-view');
+
+            let currentSlideIndex = 0;
+            const totalSlides = slides.length;
+            let slideWidth = 0;
+
+            function adjustDimensions() {
+                slideWidth = view.clientWidth;
+                slides.forEach(slide => {
+                    slide.style.width = `${slideWidth}px`;
+                });
+                track.style.width = `${slideWidth * totalSlides}px`;
+                updateSliderPosition(false); 
+            }
+
+            function updateSliderPosition(animate = true) {
+                const offset = -currentSlideIndex * slideWidth;
+                track.style.transform = `translateX(${offset}px)`;
+                track.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+                updateIndicators();
+            }
+
+            function goToNextSlide() {
+                currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+                updateSliderPosition();
+            }
+
+            function goToPrevSlide() {
+                currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+                updateSliderPosition();
+            }
+
+            function createIndicators() {
+                indicatorsContainer.innerHTML = '';
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('span');
+                    dot.classList.add('indicator-dot');
+                    dot.setAttribute('data-index', i);
+                    dot.addEventListener('click', () => {
+                        currentSlideIndex = i;
+                        updateSliderPosition();
+                    });
+                    indicatorsContainer.appendChild(dot);
+                }
+            }
+
+            function updateIndicators() {
+                indicatorsContainer.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlideIndex);
+                });
+            }
+
+            createIndicators();
+            adjustDimensions();
+            
+            prevBtn.addEventListener('click', goToPrevSlide);
+            nextBtn.addEventListener('click', goToNextSlide);
+
+            window.addEventListener('resize', () => {
+                adjustDimensions();
+            });
+
+            let startX = 0;
+            view.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+
+            view.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const deltaX = endX - startX;
+                
+                if (Math.abs(deltaX) > 50) {
+                    if (deltaX > 0) {
+                        goToPrevSlide();
+                    } else {
+                        goToNextSlide();
+                    }
+                }
+            });
+        }
+
+        function initScrollAnimations() {
+            const sections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        function initNavScrollSpy() {
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+    </script>
+
+</body>
+</html>
