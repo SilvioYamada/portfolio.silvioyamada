@@ -806,11 +806,30 @@
       }
 
       .experience-logo {
-        width: 110px;
-        max-width: 40%;
+        width: 88px;
         height: auto;
         display: block;
-        margin: 0 0 12px 0;
+      }
+
+      .experience-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 8px;
+      }
+
+      .experience-text h3 {
+        margin: 0 0 4px 0;
+      }
+
+      @media (max-width: 520px) {
+        .experience-header {
+          gap: 12px;
+        }
+
+        .experience-logo {
+          width: 64px;
+        }
       }
 
       .experience-card .company-info {
@@ -2053,9 +2072,13 @@
 
           <div class="experience-grid">
             <article class="experience-card">
-              <h3>Senior User Experience Designer</h3>
-              <h4>Builderall</h4>
-              <img src="https://cdn.simpleicons.org/builderall/ffffff" alt="Builderall Logo" class="experience-logo" />
+              <div class="experience-header">
+                <img src="https://cdn.simpleicons.org/builderall/ffffff" alt="Builderall Logo" class="experience-logo" />
+                <div class="experience-text">
+                  <h3>Senior User Experience Designer</h3>
+                  <h4>Builderall</h4>
+                </div>
+              </div>
               <p class="company-info">
                 A Builderall é uma plataforma de marketing digital completa que
                 oferece diversas ferramentas em um único ambiente, com o
