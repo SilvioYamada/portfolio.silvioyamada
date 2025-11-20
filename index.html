@@ -513,6 +513,21 @@
           transform: translateX(0);
         }
 
+        /* Ensure active nav and its children accept pointer events and are visible */
+        nav.active {
+          pointer-events: auto !important;
+          z-index: 1002 !important;
+        }
+
+        nav.active ul {
+          display: flex !important;
+        }
+
+        nav.active a,
+        nav.active button {
+          pointer-events: auto !important;
+        }
+
         nav ul {
           display: none;
           flex-direction: column;
