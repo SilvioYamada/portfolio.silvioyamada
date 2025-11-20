@@ -301,42 +301,6 @@
         transform: rotate(-45deg) translate(7px, -7px);
       }
 
-      /* Language toggle (default) */
-      .lang-toggle {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-
-      .lang-btn {
-        background: transparent;
-        border: 1px solid transparent;
-        padding: 6px 8px;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background 0.2s ease, transform 0.12s ease;
-      }
-
-      .lang-btn:focus {
-        outline: 2px solid var(--color-primary);
-        outline-offset: 2px;
-      }
-
-      .lang-btn.active {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.08);
-        transform: translateY(-1px);
-      }
-
-      .lang-label {
-        display: none;
-        font-size: 0.95rem;
-        color: var(--color-text-secondary);
-        margin-right: 8px;
-        font-weight: 600;
-      }
-
       nav ul {
         display: flex;
         list-style: none;
@@ -378,6 +342,149 @@
       .menu-overlay.active {
         display: block;
         opacity: 1;
+      }
+
+      /* --- Responsividade do Menu (mobile) --- */
+      @media (max-width: 768px) {
+        header {
+          padding: 12px 4%;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav {
+          position: fixed;
+          top: 64px;
+          right: 0;
+          height: calc(100% - 64px);
+          width: 100%;
+          max-width: 360px;
+          background: rgba(18, 18, 18, 0.98);
+          backdrop-filter: blur(6px);
+          transform: translateX(100%);
+          transition: transform 0.28s ease;
+          z-index: 1002;
+          display: block;
+          pointer-events: auto;
+        }
+
+        nav.active {
+          transform: translateX(0);
+        }
+
+        nav ul {
+          display: none;
+          flex-direction: column;
+          list-style: none;
+          padding: 18px 16px;
+          gap: 8px;
+        }
+
+        nav.active ul {
+          display: flex;
+        }
+
+        nav ul li {
+          margin: 0;
+        }
+
+        nav ul li a {
+          display: block;
+          padding: 12px 10px;
+          font-size: 1.05rem;
+          color: var(--color-text-primary);
+          border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .menu-overlay {
+          display: none;
+          opacity: 0;
+          transition: opacity 220ms ease;
+          will-change: opacity;
+        }
+
+        .menu-overlay.active {
+          display: block;
+          opacity: 1;
+        }
+
+        .lang-toggle {
+          position: absolute;
+          right: 64px;
+          top: 14px;
+          display: flex;
+          gap: 6px;
+        }
+
+        .lang-btn {
+          background: transparent;
+          border: 1px solid transparent;
+          padding: 6px 8px;
+          font-size: 1rem;
+          border-radius: 6px;
+        }
+
+        .lang-btn.active {
+          border-color: var(--color-primary);
+          box-shadow: 0 4px 14px rgba(0,163,255,0.12);
+        }
+
+        .logo {
+          font-size: 1.15rem;
+        }
+
+        .logo-profile {
+          width: 44px;
+          height: 44px;
+        }
+      }
+
+      /* Drawer full-width on very small devices */
+      @media (max-width: 420px) {
+        nav {
+          width: 100%;
+          max-width: none;
+          right: 0;
+          left: 0;
+          top: 56px;
+          height: calc(100% - 56px);
+        }
+
+        nav ul {
+          padding: 22px 18px;
+        }
+
+        .lang-toggle {
+          right: 16px;
+          top: 10px;
+        }
+
+        /* Slightly larger touch targets */
+        nav ul li a {
+          padding: 16px 14px;
+          font-size: 1.12rem;
+        }
+      }
+
+      /* Close button inside nav (mobile) */
+      .nav-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        font-size: 1.6rem;
+        padding: 8px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .nav-close:focus {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
       }
 
       /* --- 3. Botões (CTA) --- */
@@ -1306,9 +1413,6 @@
           box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
         }
 
-          /* garante que o nav role como painel rolável em telas pequenas */
-          nav { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-
         nav.active {
           right: 0;
         }
@@ -1319,44 +1423,6 @@
           gap: 0;
           height: 100%;
         }
-
-        /* espaçamento para o bloco de idiomas dentro do nav quando movido */
-        nav .lang-toggle.mobile-lang {
-          padding: 12px 30px;
-          justify-content: flex-end;
-          border-top: 1px solid rgba(255,255,255,0.03);
-          margin-bottom: 8px;
-        }
-
-        /* Very small devices tweaks */
-        @media (max-width: 360px) {
-          nav {
-            width: 92vw;
-          }
-
-          nav ul {
-            padding: 76px 20px 30px;
-          }
-
-          .menu-toggle {
-            padding: 10px;
-          }
-
-          .lang-label {
-            display: inline-block;
-            margin-right: 10px;
-            font-size: 1rem;
-            color: var(--color-text-secondary);
-          }
-
-          nav .lang-toggle.mobile-lang {
-            padding: 14px 20px;
-            justify-content: flex-start;
-          }
-        }
-
-        /* se o nav estiver ativo, mantém foco visível e não permite que o header fique sobreposto */
-        nav.active { right: 0; z-index: 1100; }
 
         nav ul li {
           margin: 0;
@@ -1867,6 +1933,7 @@
         <span></span>
       </button>
       <nav aria-label="Navegação Principal">
+        <button class="nav-close" aria-label="Fechar menu">×</button>
         <ul>
           <li><a href="#hero" class="active" data-i18n="nav.home">Inicial</a></li>
           <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
@@ -1876,7 +1943,6 @@
         </ul>
       </nav>
       <div class="lang-toggle" aria-hidden="false">
-        <span class="lang-label" aria-hidden="true">Idioma</span>
         <button class="lang-btn" data-lang="pt" title="Português">🇧🇷</button>
         <button class="lang-btn" data-lang="en" title="English">🇺🇸</button>
       </div>
@@ -2684,18 +2750,60 @@
       const nav = document.querySelector("nav");
       const menuOverlay = document.querySelector(".menu-overlay");
       const navLinks = document.querySelectorAll("nav ul li a");
+      const navCloseBtn = document.querySelector(".nav-close");
 
-      function toggleMenu() {
-        menuToggle.classList.toggle("active");
-        nav.classList.toggle("active");
-        menuOverlay.classList.toggle("active");
-        const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", !isExpanded);
+      // Accessibility / focus trap variables
+      let previousActiveElement = null;
+      let focusableElements = [];
+      let firstFocusable = null;
+      let lastFocusable = null;
+      let focusTrapHandler = null;
 
-        // Previne scroll do body quando menu estiver aberto
-        document.body.style.overflow = nav.classList.contains("active")
-          ? "hidden"
-          : "";
+      function openMenu() {
+        previousActiveElement = document.activeElement;
+        menuToggle.classList.add("active");
+        nav.classList.add("active");
+        menuOverlay.classList.add("active");
+        menuToggle.setAttribute("aria-expanded", "true");
+        nav.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        // setup focusable elements inside nav
+        focusableElements = Array.from(
+          nav.querySelectorAll(
+            'a, button, input, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.hasAttribute("disabled"));
+        firstFocusable = focusableElements[0] || nav;
+        lastFocusable = focusableElements[focusableElements.length - 1] || nav;
+
+        // focus first
+        (firstFocusable || nav).focus();
+
+        // trap focus
+        focusTrapHandler = function (e) {
+          if (e.key === "Tab") {
+            if (focusableElements.length === 0) {
+              e.preventDefault();
+              return;
+            }
+            if (e.shiftKey) {
+              if (document.activeElement === firstFocusable) {
+                e.preventDefault();
+                lastFocusable.focus();
+              }
+            } else {
+              if (document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
+              }
+            }
+          } else if (e.key === "Escape") {
+            closeMenu();
+          }
+        };
+
+        document.addEventListener("keydown", focusTrapHandler);
       }
 
       function closeMenu() {
@@ -2703,10 +2811,29 @@
         nav.classList.remove("active");
         menuOverlay.classList.remove("active");
         menuToggle.setAttribute("aria-expanded", "false");
+        nav.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";
+
+        try {
+          document.removeEventListener("keydown", focusTrapHandler);
+        } catch (e) {}
+
+        focusTrapHandler = null;
+
+        // restore focus
+        if (previousActiveElement && typeof previousActiveElement.focus === "function") {
+          previousActiveElement.focus();
+        }
       }
 
-      menuToggle.addEventListener("click", toggleMenu);
+      // toggle opens/closes
+      menuToggle.addEventListener("click", () => {
+        if (nav.classList.contains("active")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
 
       // Fecha o menu ao clicar em um link
       navLinks.forEach((link) => {
@@ -2716,97 +2843,8 @@
       // Fecha o menu ao clicar no overlay
       menuOverlay.addEventListener("click", closeMenu);
 
-      // Fecha o menu ao pressionar ESC
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && nav.classList.contains("active")) {
-          closeMenu();
-        }
-      });
-
-      // Fecha o menu ao trocar idioma (quando os botões estiverem dentro do nav móvel)
-      document.querySelectorAll('.lang-btn').forEach((b) => {
-        b.addEventListener('click', () => {
-          if (window.innerWidth <= 768 && nav.classList.contains('active')) {
-            // pequeno delay para o usuário ver a mudança de idioma antes de fechar
-            setTimeout(closeMenu, 180);
-          }
-        });
-      });
-
-      // Focus trap simples para o painel de navegação (quando aberto)
-      (function setupFocusTrap() {
-        const focusableSelector = 'a, button, [tabindex]:not([tabindex="-1"])';
-        let lastFocusedBeforeOpen = null;
-
-        function trap(e) {
-          if (!nav.classList.contains('active')) return;
-          const focusable = nav.querySelectorAll(focusableSelector);
-          if (focusable.length === 0) return;
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
-
-          if (e.key === 'Tab') {
-            if (e.shiftKey && document.activeElement === first) {
-              e.preventDefault();
-              last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-              e.preventDefault();
-              first.focus();
-            }
-          }
-        }
-
-        menuToggle.addEventListener('click', () => {
-          if (nav.classList.contains('active')) {
-            // abriu
-            lastFocusedBeforeOpen = document.activeElement;
-            // foca o primeiro link do nav
-            const firstLink = nav.querySelector('a, button');
-            if (firstLink) firstLink.focus();
-            document.addEventListener('keydown', trap);
-          } else {
-            // fechou
-            document.removeEventListener('keydown', trap);
-            if (lastFocusedBeforeOpen) lastFocusedBeforeOpen.focus();
-          }
-        });
-      })();
-
-      // Ajustes de header/menu para telas pequenas
-      (function setupResponsiveHeader() {
-        const header = document.querySelector('header');
-        const langToggle = document.querySelector('.lang-toggle');
-        const navEl = document.querySelector('nav');
-        const navList = navEl.querySelector('ul');
-        let moved = false;
-
-        function moveLangIntoNav() {
-          if (!langToggle || !navEl) return;
-          if (window.innerWidth <= 768 && !moved) {
-            // insere antes da lista de navegação dentro do nav
-            navEl.insertBefore(langToggle, navList);
-            langToggle.classList.add('mobile-lang');
-            moved = true;
-          } else if (window.innerWidth > 768 && moved) {
-            // restaura para o header (após nav)
-            header.appendChild(langToggle);
-            langToggle.classList.remove('mobile-lang');
-            moved = false;
-          }
-        }
-
-        // Aumenta área de toque dos botões quando estiverem dentro do menu móvel
-        const styleMobileLang = document.createElement('style');
-        styleMobileLang.textContent = `
-          nav .lang-toggle { padding: 18px 24px; display:flex; justify-content:flex-end; }
-          nav .lang-btn { padding: 10px 12px; font-size:18px; }
-        `;
-        document.head.appendChild(styleMobileLang);
-
-        window.addEventListener('resize', moveLangIntoNav);
-        // aplica imediatamente
-        moveLangIntoNav();
-      })();
+      // Fecha o menu ao clicar no botão X
+      if (navCloseBtn) navCloseBtn.addEventListener("click", closeMenu);
 
       // --- Tradução (i18n) ---
       const TRANSLATIONS = {
