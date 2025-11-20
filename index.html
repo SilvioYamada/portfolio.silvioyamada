@@ -856,8 +856,36 @@
         flex: 0 0 72px;
       }
 
+      .li-modas-card .company-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border: 2px solid rgba(255,255,255,0.06);
+      }
+
       .li-modas-card .company-logo .logo-quality {
-        padding: 2px;
+        /* Ensure the logo fills the circle without cropping */
+        padding: 0;
+        width: 92%;
+        height: auto;
+        max-height: 92%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* Stronger rule to prevent cropping on some devices/browsers */
+      .li-modas-card .company-logo img {
+        width: auto !important;
+        height: 90% !important;
+        max-height: 90% !important;
+        object-fit: contain !important;
+        object-position: center center !important;
+        padding: 0 !important;
+        display: block !important;
+        margin: 0 auto !important;
       }
 
       @media (max-width: 768px) {
