@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Li Modas Oficial logo">
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <!-- Embed the original PNG centered and fitted. Preserve aspect ratio. -->
+  <image href="li-modas-oficial.png" x="50" y="50" width="412" height="412" preserveAspectRatio="xMidYMid meet" />
+</svg>
