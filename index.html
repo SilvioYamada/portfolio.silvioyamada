@@ -558,6 +558,31 @@
           display: block;
         }
 
+        /* Larger screens: increase flag container and svg proportion */
+        @media (min-width: 1200px) {
+          .lang-toggle.variant-combo .lang-btn {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+          }
+          .lang-toggle.variant-combo .lang-btn .svg-flag {
+            width: 72%;
+          }
+          .lang-toggle.variant-combo { gap: 18px; }
+        }
+
+        @media (min-width: 1600px) {
+          .lang-toggle.variant-combo .lang-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+          }
+          .lang-toggle.variant-combo .lang-btn .svg-flag {
+            width: 78%;
+          }
+          .lang-toggle.variant-combo { gap: 20px; }
+        }
+
         /* hover: subtle lift and highlight */
         .lang-toggle.variant-combo .lang-btn:hover {
           transform: translateY(-3px);
