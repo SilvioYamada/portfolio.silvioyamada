@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="meta.title">Silvio Yamada | UI/UX Designer com 17 anos de experiência</title>
+    <title>Silvio Yamada | UI/UX Designer com 17 anos de experiência</title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      data-i18n-meta="meta.description"
       content="UI/UX Designer sênior com 17 anos de experiência em design de interfaces e experiência do usuário. Especialista em transformar complexidade em experiências digitais intuitivas e impactantes."
     />
-        display: flex;
-        list-style: none;
-        padding: 18px 12px;
-        gap: 6px;
+    <meta
+      name="keywords"
+      content="UI Designer, UX Designer, Designer de Interface, Experiência do Usuário, Portfolio Design, Silvio Yamada, Web Design, Design Digital"
+    />
+    <meta name="author" content="Silvio" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="Portuguese" />
 
@@ -24,7 +24,6 @@
     <meta property="og:title" content="Silvio | UI/UX Designer" />
     <meta
       property="og:description"
-      data-i18n-meta="meta.og_description"
       content="Eu transformo complexidade em experiências digitais que geram resultados. Portfolio de UI/UX Designer sênior."
     />
     <meta
@@ -45,7 +44,6 @@
     <meta name="twitter:title" content="Silvio | UI/UX Designer" />
     <meta
       name="twitter:description"
-      data-i18n-meta="meta.twitter_description"
       content="Eu transformo complexidade em experiências digitais que geram resultados."
     />
     <meta
@@ -228,7 +226,7 @@
         padding: 14px 5%;
         display: grid;
         /* 4 columns: logo | center nav | lang-toggle | hamburger */
-        grid-template-columns: auto minmax(0, 1fr) auto auto;
+        grid-template-columns: auto 1fr auto auto;
         align-items: center;
         gap: 16px;
         background: rgba(18, 18, 18, 0.9);
@@ -240,9 +238,7 @@
       @media (max-width: 1024px) {
         header {
           padding: 12px 4%;
-          /* keep four columns (logo | nav | lang-toggle | hamburger) to avoid wrapping
-             use minmax so the center column can shrink without forcing wrap */
-          grid-template-columns: auto minmax(0, 1fr) auto auto;
+          grid-template-columns: auto 1fr auto;
         }
 
         .menu-toggle {
@@ -264,39 +260,6 @@
 
         /* bring flags very close to the hamburger on tablet */
         .lang-toggle { gap: 8px; margin-right: 0; }
-
-        /* Ensure drawer behavior is active on tablet sizes too (<=1024px)
-           so the hamburger opens a sliding nav similar to mobile */
-        nav {
-          position: fixed;
-          top: 64px;
-          right: 0;
-          height: calc(100% - 64px);
-          width: 100%;
-          max-width: 360px;
-          background: rgba(18, 18, 18, 0.98);
-          backdrop-filter: blur(6px);
-          transform: translateX(100%);
-          transition: transform 0.28s ease;
-          z-index: 1002;
-          display: block;
-          pointer-events: auto;
-        }
-
-        nav.active {
-          transform: translateX(0);
-        }
-
-        nav ul {
-          display: none;
-          list-style: none;
-          padding: 18px 12px;
-          gap: 6px;
-        }
-
-        nav.active ul {
-          display: flex;
-        }
       }
 
       .logo {
@@ -393,53 +356,35 @@
         border: none;
         z-index: 1001;
         justify-self: end; /* ensure hamburger sits at far right */
-        position: relative;
-        width: 48px;
-        height: 40px;
-        align-items: center;
-        justify-content: center;
       }
 
       /* reduce spacing between lang-toggle and hamburger specifically */
       .lang-toggle { margin-right: 2px; }
 
       .menu-toggle span {
-        display: block;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 22px;
+        width: 25px;
         height: 3px;
         background: var(--color-text-primary);
+        margin: 3px 0;
+        transition: all 0.3s ease;
         border-radius: 3px;
-        transform-origin: center;
-        transition: transform 260ms cubic-bezier(0.2,0.9,0.2,1), opacity 180ms ease, background 180ms ease;
       }
 
-      .menu-toggle span:nth-child(1) { transform: translate(-50%,-9px); }
-      .menu-toggle span:nth-child(2) { transform: translate(-50%,-50%); }
-      .menu-toggle span:nth-child(3) { transform: translate(-50%,6px); }
-
-      /* Active state: smooth X centered, color highlight */
       .menu-toggle.active span:nth-child(1) {
-        transform: translate(-50%,-50%) rotate(45deg);
-        background: var(--color-primary);
+        transform: rotate(45deg) translate(7px, 7px);
       }
 
       .menu-toggle.active span:nth-child(2) {
         opacity: 0;
-        transform: translate(-50%,-50%) scaleX(0.2);
       }
 
       .menu-toggle.active span:nth-child(3) {
-        transform: translate(-50%,-50%) rotate(-45deg);
-        background: var(--color-primary);
+        transform: rotate(-45deg) translate(7px, -7px);
       }
 
       /* Main navigation (desktop) */
       nav {
         justify-self: end;
-        min-width: 0; /* allow nav to shrink inside grid to avoid wrapping */
       }
 
       nav ul {
@@ -1454,17 +1399,8 @@
       .contact-links {
         display: flex;
         justify-content: center;
-        align-items: center;
         gap: 20px;
-        flex-wrap: nowrap; /* keep primary CTAs side-by-side on most viewports */
-      }
-
-      /* allow wrapping on very small screens to avoid overflow */
-      @media (max-width: 420px) {
-        .contact-links {
-          flex-wrap: wrap;
-          gap: 12px;
-        }
+        flex-wrap: wrap;
       }
 
       .contact-links a {
@@ -1736,14 +1672,14 @@
 
 
         /* Mobile nav: use transform for smooth GPU-accelerated sliding
-           Drawer will start below the header to avoid overlapping header content */
+           Drawer will now cover the header when opened (top:0) */
         nav {
           position: fixed;
-          top: 64px; /* start below the header */
+          top: 0; /* cover header */
           right: 0;
           width: min(88%, 360px);
           max-width: 360px;
-          height: calc(100% - 64px);
+          height: 100vh;
           background: rgba(18, 18, 18, 0.98);
           backdrop-filter: blur(20px);
           transform: translateX(100%);
@@ -1760,6 +1696,7 @@
 
         nav ul {
           display: flex;
+          flex-direction: column;
           padding: 20px 18px 30px; /* tighter padding to show more items */
           gap: 8px;
           height: 100%;
@@ -1770,9 +1707,9 @@
         /* Menu text responsiveness: reduce font size on smaller screens
            and ensure text wraps cleanly inside the drawer */
         nav ul li a {
-          font-size: clamp(0.82rem, 2.2vw, 0.98rem);
-          padding: 10px 12px;
-          line-height: 1.24;
+          font-size: clamp(0.9rem, 1.8vw, 1.0rem);
+          padding: 10px 10px;
+          line-height: 1.26;
           white-space: normal;
           text-align: left;
           word-break: break-word;
@@ -1831,12 +1768,11 @@
         }
 
         #hero .cta-buttons {
+          flex-direction: column;
           width: 100%;
           max-width: 100%;
           padding: 0 4%;
           gap: 12px;
-          display: flex;
-          flex-direction: column;
         }
 
         #hero .cta-button {
@@ -2250,44 +2186,6 @@
         }
       }
 
-      /* Consolidated nav responsiveness */
-      /* Tablet and below: hide desktop nav and show hamburger */
-      @media (max-width: 1024px) {
-        nav > ul { display: none !important; }
-        .menu-toggle { display: flex !important; }
-        /* keep four columns so lang-toggle + hamburger remain on the same row */
-        header { grid-template-columns: auto 1fr auto auto; }
-      }
-
-      /* Desktop and large screens: show horizontal nav, hide hamburger */
-      @media (min-width: 1025px) {
-        .menu-toggle { display: none !important; }
-        /* restore nav into normal flow */
-        nav {
-          position: static !important;
-          transform: none !important;
-          height: auto !important;
-          width: auto !important;
-          max-width: none !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          pointer-events: auto !important;
-        }
-
-        nav ul {
-          display: flex !important;
-          gap: clamp(16px, 2.5vw, 36px) !important;
-          align-items: center !important;
-          flex-wrap: wrap !important;
-        }
-
-        nav ul li a {
-          font-size: clamp(0.95rem, 1.2vw, 1.08rem) !important;
-          padding: 10px 8px !important;
-          color: var(--color-text-secondary) !important;
-        }
-      }
-
       /* Melhorias de acessibilidade e usabilidade */
       @media (hover: none) and (pointer: coarse) {
         /* Dispositivos touch - áreas de toque maiores */
@@ -2370,47 +2268,6 @@
         }
         .lang-toggle.variant-combo { gap: 12px !important; }
       }
-
-      /* Strong defensive overrides: ensure drawer and links are visible when active
-         These rules use !important so they win against earlier conflicting declarations. */
-      nav.active {
-        transform: translateX(0) !important;
-        display: block !important;
-        position: fixed !important;
-        right: 0 !important;
-        top: 64px !important;
-        width: min(88%, 360px) !important;
-        max-width: 360px !important;
-        height: calc(100% - 64px) !important;
-        z-index: 1200 !important; /* ensure nav is above overlay/header */
-        pointer-events: auto !important;
-      }
-
-      nav.active ul {
-        display: flex !important;
-        flex-direction: column !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-
-      /* Make menu items full-width and clickable like the screenshot */
-      nav ul li a {
-        color: var(--color-text-primary) !important;
-        visibility: visible !important;
-        display: block !important;
-        width: 100% !important;
-        padding: 14px 16px !important;
-        font-weight: 700 !important;
-        font-size: clamp(1rem, 2.6vw, 1.18rem) !important;
-        pointer-events: auto !important;
-        -webkit-tap-highlight-color: transparent !important;
-      }
-
-      /* Ensure overlay doesn't capture clicks intended for the drawer */
-      .menu-overlay {
-        z-index: 1000 !important;
-        pointer-events: auto !important;
-      }
     </style>
   </head>
   <body>
@@ -2422,8 +2279,17 @@
         </div>
         <span>Silvio | UI/UX Designer</span>
       </a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="#hero" class="active" data-i18n="nav.home">Inicial</a></li>
+          <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+          <li><a href="#portfolio" data-i18n="nav.portfolio">Portfólio</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Experiência</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contato</a></li>
+        </ul>
+      </nav>
       <div class="lang-toggle variant-combo" aria-hidden="false">
-        <button class="lang-btn" data-lang="pt" title="Português" data-i18n-title="lang.pt.title">
+        <button class="lang-btn" data-lang="pt" title="Português">
           <span class="lang-flag">
             <!-- Brazil SVG (styled like US flag button) -->
             <svg class="svg-flag" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
@@ -2434,7 +2300,7 @@
             </svg>
           </span>
         </button>
-        <button class="lang-btn" data-lang="en" title="English" data-i18n-title="lang.en.title">
+        <button class="lang-btn" data-lang="en" title="English">
           <span class="lang-flag">
             <!-- US flag SVG (simplified) -->
             <svg class="svg-flag" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
@@ -2458,17 +2324,6 @@
       </button>
     </header>
 
-    <!-- Nav moved outside header to avoid stacking/context issues with fixed drawer -->
-    <nav data-i18n-aria="nav.aria" aria-label="Navegação Principal" class="" aria-hidden="true">
-      <ul>
-        <li><a href="#hero" class="active" data-i18n="nav.home">Inicial</a></li>
-        <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="#portfolio" data-i18n="nav.portfolio">Portfólio</a></li>
-        <li><a href="#experience" data-i18n="nav.experience">Experiência</a></li>
-        <li><a href="#contact" data-i18n="nav.contact">Contato</a></li>
-      </ul>
-    </nav>
-
     <main>
       <section id="hero">
         <div class="container fade-in-section">
@@ -2486,9 +2341,6 @@
               target="_blank"
               rel="noopener noreferrer"
               class="cta-button external-link"
-              data-i18n="cta.portfolio"
-              data-i18n-title="cta.portfolio.title"
-              title="Veja Meu Portfólio"
               >Veja Meu Portfólio</a
             >
             <a
@@ -2496,7 +2348,6 @@
               target="_blank"
               rel="noopener noreferrer"
               class="cta-button secondary linkedin-link"
-              data-i18n="cta.linkedin"
               >Conecte-se no LinkedIn</a
             >
           </div>
@@ -2506,7 +2357,7 @@
       <section id="about" class="page-section">
         <div class="container fade-in-section">
           <h2 data-i18n="section.what">O que eu trago para a mesa</h2>
-          <p data-i18n="about.description">
+          <p>
             Minha paixão está em todo o ciclo: da pesquisa e validação de
             necessidades de usuários à criação de interfaces atraentes e
             funcionais.
@@ -2514,30 +2365,30 @@
 
           <div class="skills-grid">
             <article class="skill-card">
-              <h3 data-i18n="about.skill.user_focus">Foco no Usuário</h3>
+              <h3>Foco no Usuário</h3>
               <ul>
-                <li data-i18n="about.user.interviews">Entrevistas e Pesquisa</li>
-                <li data-i18n="about.user.usability">Testes de Usabilidade</li>
-                <li data-i18n="about.user.journeys">Criação de User Journeys</li>
-                <li data-i18n="about.user.personas">Desenvolvimento de Personas</li>
+                <li>Entrevistas e Pesquisa</li>
+                <li>Testes de Usabilidade</li>
+                <li>Criação de User Journeys</li>
+                <li>Desenvolvimento de Personas</li>
               </ul>
             </article>
             <article class="skill-card">
-              <h3 data-i18n="about.skill.tech">Habilidade Técnica</h3>
+              <h3>Habilidade Técnica</h3>
               <ul>
-                <li data-i18n="about.tech.figma">Figma</li>
-                <li data-i18n="about.tech.adobe">Adobe XD & Photoshop</li>
-                <li data-i18n="about.tech.illustrator">Adobe Illustrator</li>
-                <li data-i18n="about.tech.designsystems">Aplicação de Design Systems</li>
+                <li>Figma</li>
+                <li>Adobe XD & Photoshop</li>
+                <li>Adobe Illustrator</li>
+                <li>Aplicação de Design Systems</li>
               </ul>
             </article>
             <article class="skill-card">
-              <h3 data-i18n="about.skill.business">Resultados de Negócio</h3>
+              <h3>Resultados de Negócio</h3>
               <ul>
-                <li data-i18n="about.business.checkout">Otimização de fluxos de checkout</li>
-                <li data-i18n="about.business.conversion">Melhoria em taxas de conversão</li>
-                <li data-i18n="about.business.b2b">Design de apps B2B complexos</li>
-                <li data-i18n="about.business.international">Soluções para clientes internacionais</li>
+                <li>Otimização de fluxos de checkout</li>
+                <li>Melhoria em taxas de conversão</li>
+                <li>Design de apps B2B complexos</li>
+                <li>Soluções para clientes internacionais</li>
               </ul>
             </article>
           </div>
@@ -2547,7 +2398,7 @@
       <section id="portfolio" class="page-section">
         <div class="container fade-in-section">
           <h2 data-i18n="portfolio.title">Portfólio Seletivo</h2>
-          <p style="text-align: center; margin: 0 auto 50px auto" data-i18n="portfolio.intro">
+          <p style="text-align: center; margin: 0 auto 50px auto">
             Uma seleção de trabalhos que demonstram meu processo, da pesquisa ao
             pixel final.
           </p>
@@ -2557,7 +2408,6 @@
               <!-- BOTÕES DE CONTROLE (Adicionados) -->
               <button
                 class="slider-control prev-btn"
-                data-i18n-aria="slider.previous"
                 aria-label="Slide Anterior"
               >
                 <svg
@@ -2586,16 +2436,16 @@
                 >
                   <picture>
                     <img
-                      src="img/ferramenta-drag-and-drop -builderall-website-builder.jpg"
-                      alt="Ferramenta Drag-and-Drop | Builderall Website Builder"
+                      src="img/og-image.jpg"
+                      alt="Dashboard de Gerenciamento B2B Wordpress PRO"
                       loading="lazy"
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.builderall.title">
+                    <h3>
                       Ferramenta Drag-and-Drop | Builderall Website Builder
                     </h3>
-                    <p data-i18n="slide.builderall.desc">
+                    <p>
                       Projeto de reestruturação de UI/UX para editor de
                       websites.
                     </p>
@@ -2612,14 +2462,14 @@
                 >
                   <picture>
                     <img
-                      src="img/booking-sistema-de-agendamento-builderall.jpg"
-                      alt="Booking | Sistema de Agendamento | Builderall"
+                      src="img/og-image.jpg"
+                      alt="Plataforma de Sistema de Agendamento"
                       loading="lazy"
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.booking.title">Booking | Sistema de Agendamento | Builderall</h3>
-                    <p data-i18n="slide.booking.desc">
+                    <h3>Booking | Sistema de Agendamento | Builderall</h3>
+                    <p>
                       Desenvolvimento de um sistema completo de agendamento
                       online.
                     </p>
@@ -2635,15 +2485,18 @@
                   aria-label="Ver Projeto Chatbot no Behance"
                 >
                   <picture>
-                    <img
-                      src="img/chatbot-crm-chatbot-whatsapp-launch-manager.jpg"
-                      alt="Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager"
-                      loading="lazy"
-                    />
+                    <img src="img/chatbot-crm-chatbot-whatsapp-launch-manager.jpg"Ferramenta de
+                    Comunicação Corporativa Chatbot" loading="lazy">
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.chatbot.title">Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager</h3>
-                    <p data-i18n="slide.chatbot.desc">Criação de interface de gestão de leads e automação via WhatsApp.</p>
+                    <h3>
+                      Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch
+                      Manager
+                    </h3>
+                    <p>
+                      Criação de interface de gestão de leads e automação via
+                      WhatsApp.
+                    </p>
                   </div>
                 </a>
 
@@ -2663,8 +2516,14 @@
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.bergen.title">Website | Time de Basquetebol Norueguês | Bergen Elite Basketball</h3>
-                    <p data-i18n="slide.bergen.desc">Website Esportivo (Cliente da Noruega) com foco em engajamento.</p>
+                    <h3>
+                      Website | Time de Basquetebol Norueguês | Bergen Elite
+                      Basketball
+                    </h3>
+                    <p>
+                      Website Esportivo (Cliente da Noruega) com foco em
+                      engajamento.
+                    </p>
                   </div>
                 </a>
 
@@ -2678,14 +2537,17 @@
                 >
                   <picture>
                     <img
-                      src="img/crm-wordpress-for-builderall.jpg"
-                      alt="CRM | Wordpress for Builderall"
+                      src="img/og-image.jpg"
+                      alt="Interface de Análise de Dados e Dashboard Analytics"
                       loading="lazy"
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.crm.title">CRM | Wordpress for Builderall</h3>
-                    <p data-i18n="slide.crm.desc">Interface de Análise de Dados para gerenciar funis de vendas.</p>
+                    <h3>CRM | Wordpress for Builderall</h3>
+                    <p>
+                      Interface de Análise de Dados para gerenciar funis de
+                      vendas.
+                    </p>
                   </div>
                 </a>
 
@@ -2705,8 +2567,12 @@
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.crm_whatsapp.title">CRM - Plataforma CRM e Chatbot | WhatsApp Launch Manager</h3>
-                    <p data-i18n="slide.crm_whatsapp.desc">Redesign de landing page de produto com foco em conversão.</p>
+                    <h3>
+                      CRM - Plataforma CRM e Chatbot | WhatsApp Launch Manager
+                    </h3>
+                    <p>
+                      Redesign de landing page de produto com foco em conversão.
+                    </p>
                   </div>
                 </a>
 
@@ -2726,8 +2592,11 @@
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.bball.title">BBall | Gerenciador de Basquetebol</h3>
-                    <p data-i18n="slide.bball.desc">Plataforma de gestão esportiva completa para times de basquetebol.</p>
+                    <h3>BBall | Gerenciador de Basquetebol</h3>
+                    <p>
+                      Plataforma de gestão esportiva completa para times de
+                      basquetebol.
+                    </p>
                   </div>
                 </a>
 
@@ -2747,8 +2616,13 @@
                     />
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3 data-i18n="slide.peixinhos.title">Mídias Sociais | Peixinhos III - Restaurante e Petiscaria</h3>
-                    <p data-i18n="slide.peixinhos.desc">Estratégia e Design de conteúdo para redes sociais, fortalecendo a presença digital de um restaurante local.</p>
+                    <h3>
+                      Mídias Sociais | Peixinhos III - Restaurante e Petiscaria
+                    </h3>
+                    <p>
+                      Estratégia e Design de conteúdo para redes sociais,
+                      fortalecendo a presença digital de um restaurante local.
+                    </p>
                   </div>
                 </a>
               </div>
@@ -2756,7 +2630,6 @@
               <!-- BOTÃO DE CONTROLE (Adicionado) -->
               <button
                 class="slider-control next-btn"
-                data-i18n-aria="slider.next"
                 aria-label="Próximo Slide"
               >
                 <svg
@@ -2787,7 +2660,6 @@
               target="_blank"
               rel="noopener noreferrer"
               class="cta-button"
-              data-i18n="portfolio.full"
               >Ver Portfólio Completo no Behance</a
             >
           </div>
@@ -2802,20 +2674,20 @@
             <article class="experience-card">
               <div class="company-header">
                 <div class="company-text">
-                    <h3 data-i18n="experience.builderall.title">Senior User Experience Designer</h3>
-                    <h4 data-i18n="experience.builderall.company">Builderall</h4>
+                  <h3>Senior User Experience Designer</h3>
+                  <h4>Builderall</h4>
                 </div>
               </div>
-              <p class="company-info" data-i18n="experience.builderall.info">
+              <p class="company-info">
                 A Builderall é uma plataforma de marketing digital completa que
                 oferece diversas ferramentas em um único ambiente, com o
                 objetivo de ajudar empreendedores e empresas a crescerem online.
               </p>
               <div class="meta">
-                <span data-i18n="experience.builderall.duration">Duração: dez 2014 - out 2025 (10 anos e 11 meses)</span>
-                <span data-i18n="experience.builderall.location">Localização: Orlando, Flórida (Remoto)</span>
+                <span>Duração: dez 2014 - out 2025 (10 anos e 11 meses)</span>
+                <span>Localização: Orlando, Flórida (Remoto)</span>
               </div>
-              <p class="description" data-i18n="experience.builderall.desc">
+              <p class="description">
                 Responsável pelo design e usabilidade de uma suíte de 50+
                 ferramentas de marketing digital. Liderei o redesign de
                 produtos-chave, resultando em uma melhoria significativa na
@@ -2837,16 +2709,16 @@
                   <h4>Li Modas Oficial</h4>
                 </div>
               </div>
-              <p class="company-info" data-i18n="experience.limodas.info">
+              <p class="company-info">
                 A Li Modas Oficial é uma loja virtual especializada em vestidos
                 temáticos infantis e juvenis, oferecendo produtos no atacado e
                 varejo para todo o Brasil e exterior.
               </p>
               <div class="meta">
-                <span data-i18n="experience.limodas.duration">Duração: nov 2018 - out 2025 (7 anos)</span>
-                <span data-i18n="experience.limodas.location">Localização: Marília e Região, Brasil</span>
+                <span>Duração: nov 2018 - out 2025 (7 anos)</span>
+                <span>Localização: Marília e Região, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.limodas.desc">
+              <p class="description">
                 Criação de toda a identidade visual e materiais de marketing
                 digital para loja virtual especializada em moda infantil e
                 juvenil, impulsionando a presença de marca em mídias sociais.
@@ -2863,15 +2735,15 @@
             <article class="experience-card">
               <h3>Web Designer</h3>
               <h4>Admake</h4>
-              <p class="company-info" data-i18n="experience.admake.info">
+              <p class="company-info">
                 A Admake é uma agência especializada em e-commerce e marketing
                 digital.
               </p>
               <div class="meta">
-                <span data-i18n="experience.admake.duration">Duração: mai 2013 - dez 2013 (8 meses)</span>
-                <span data-i18n="experience.admake.location">Localização: Marília, São Paulo, Brasil</span>
+                <span>Duração: mai 2013 - dez 2013 (8 meses)</span>
+                <span>Localização: Marília, São Paulo, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.admake.desc">
+              <p class="description">
                 Desenvolvimento de layouts e front-end para websites
                 institucionais e campanhas de marketing digital de clientes da
                 agência, garantindo a performance visual e técnica.
@@ -2888,15 +2760,15 @@
             <article class="experience-card">
               <h3>Gráfico & Web Designer</h3>
               <h4>Horizon Marketing</h4>
-              <p class="company-info" data-i18n="experience.horizon.info">
+              <p class="company-info">
                 A Horizon Marketing é uma empresa especializada em marketing
                 para varejo.
               </p>
               <div class="meta">
-                <span data-i18n="experience.horizon.duration">Duração: fev 2012 - mai 2013 (1 ano e 4 meses)</span>
-                <span data-i18n="experience.horizon.location">Localização: Marília, São Paulo, Brasil</span>
+                <span>Duração: fev 2012 - mai 2013 (1 ano e 4 meses)</span>
+                <span>Localização: Marília, São Paulo, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.horizon.desc">
+              <p class="description">
                 Focado na criação de identidades visuais de marca e design de
                 interfaces para websites e landing pages, garantindo a
                 consistência da marca no ambiente digital.
@@ -2906,15 +2778,15 @@
             <article class="experience-card">
               <h3>Gráfico & Web Designer</h3>
               <h4>FISK Marilia</h4>
-              <p class="company-info" data-i18n="experience.fisk.info">
+              <p class="company-info">
                 A FISK Marília é uma escola de idiomas que oferece cursos de
                 inglês e espanhol.
               </p>
               <div class="meta">
-                <span data-i18n="experience.fisk.duration">Duração: fev 2010 - out 2010 (9 meses)</span>
-                <span data-i18n="experience.fisk.location">Localização: Marília, São Paulo, Brasil</span>
+                <span>Duração: fev 2010 - out 2010 (9 meses)</span>
+                <span>Localização: Marília, São Paulo, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.fisk.desc">
+              <p class="description">
                 Produção de materiais gráficos promocionais (folhetos,
                 cartazes), design de anúncios e atualização do website
                 institucional da escola para suporte às campanhas de matrícula.
@@ -2931,15 +2803,15 @@
             <article class="experience-card">
               <h3>Web Designer</h3>
               <h4>Tray</h4>
-              <p class="company-info" data-i18n="experience.tray.info">
+              <p class="company-info">
                 A Tray é uma plataforma de e-commerce robusta, pertencente à
                 Locaweb, que facilita a criação e gestão de lojas virtuais.
               </p>
               <div class="meta">
-                <span data-i18n="experience.tray.duration">Duração: out 2008 - set 2010 (2 anos)</span>
-                <span data-i18n="experience.tray.location">Localização: Marília, São Paulo, Brasil</span>
+                <span>Duração: out 2008 - set 2010 (2 anos)</span>
+                <span>Localização: Marília, São Paulo, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.tray.desc">
+              <p class="description">
                 Criação de layouts de e-commerce e banners promocionais,
                 garantindo a atração visual e a performance de vendas para lojas
                 virtuais, otimizando a experiência do usuário em plataformas de
@@ -2957,15 +2829,15 @@
             <article class="experience-card">
               <h3>Web Designer / Fotografia</h3>
               <h4>Red Nose</h4>
-              <p class="company-info" data-i18n="experience.rednose.info">
+              <p class="company-info">
                 A loja Red Nose é uma marca de moda masculina com estilo urbano,
                 esportivo e casual.
               </p>
               <div class="meta">
-                <span data-i18n="experience.rednose.duration">Duração: jan 2008 - out 2008 (10 meses)</span>
-                <span data-i18n="experience.rednose.location">Localização: Marília, São Paulo, Brasil</span>
+                <span>Duração: jan 2008 - out 2008 (10 meses)</span>
+                <span>Localização: Marília, São Paulo, Brasil</span>
               </div>
-              <p class="description" data-i18n="experience.rednose.desc">
+              <p class="description">
                 Responsável pelo design web e fotografia de produtos para marca
                 de moda masculina, criando identidade visual consistente e
                 material fotográfico de alta qualidade para catálogos e
@@ -2986,7 +2858,7 @@
       <section id="contact" class="page-section">
         <div class="container fade-in-section">
           <h2 data-i18n="contact.title">Vamos Transformar Seus Desafios em Sucesso?</h2>
-          <p data-i18n="contact.open">
+          <p>
             Estou sempre aberto a novas oportunidades e projetos que exijam uma
             combinação de visão de design e profundidade técnica. Entre em
             contato!
@@ -3010,7 +2882,7 @@
           </div>
 
           <div class="share-section">
-            <p class="share-text" data-i18n="share.prompt">
+            <p class="share-text">
               💎 Achou meu trabalho interessante? Compartilhe com quem está
               procurando um designer de verdade!
             </p>
@@ -3021,8 +2893,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Compartilhar no Twitter/X"
-                data-i18n-title="share.twitter.title"
-                data-i18n="share.twitter"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -3041,8 +2911,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Compartilhar no Facebook"
-                data-i18n-title="share.facebook.title"
-                data-i18n="share.facebook"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -3061,8 +2929,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Compartilhar no WhatsApp"
-                data-i18n-title="share.whatsapp.title"
-                data-i18n="share.whatsapp"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -3256,156 +3122,101 @@
       }
 
       // --- Menu Hamburger ---
-      (function initMenu() {
-        const menuToggle = document.querySelector(".menu-toggle");
-        const nav = document.querySelector("nav");
-        const menuOverlay = document.querySelector(".menu-overlay");
-        const headerEl = document.querySelector("header");
-        const navLinks = document.querySelectorAll("nav ul li a");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("nav");
+      const menuOverlay = document.querySelector(".menu-overlay");
+      const navLinks = document.querySelectorAll("nav ul li a");
 
-        if (!menuToggle || !nav || !menuOverlay) {
-          console.warn("Menu init aborted: required elements not found", { menuToggle, nav, menuOverlay });
-          return;
-        }
+      // Accessibility / focus trap variables
+      let previousActiveElement = null;
+      let focusableElements = [];
+      let firstFocusable = null;
+      let lastFocusable = null;
+      let focusTrapHandler = null;
 
-        // Accessibility / focus trap variables
-        let previousActiveElement = null;
-        let focusableElements = [];
-        let firstFocusable = null;
-        let lastFocusable = null;
-        let focusTrapHandler = null;
+      function openMenu() {
+        previousActiveElement = document.activeElement;
+        menuToggle.classList.add("active");
+        nav.classList.add("active");
+        menuOverlay.classList.add("active");
+        menuToggle.setAttribute("aria-expanded", "true");
+        nav.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
 
-        // adjust nav position/height based on header height so drawer starts below header
-        function updateNavPosition() {
-          try {
-            const headerHeight = headerEl ? Math.ceil(headerEl.getBoundingClientRect().height) : 0;
-            if (nav) {
-              nav.style.top = headerHeight + "px";
-              nav.style.height = `calc(100% - ${headerHeight}px)`;
+        // setup focusable elements inside nav
+        focusableElements = Array.from(
+          nav.querySelectorAll(
+            'a, button, input, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.hasAttribute("disabled"));
+        firstFocusable = focusableElements[0] || nav;
+        lastFocusable = focusableElements[focusableElements.length - 1] || nav;
+
+        // focus first
+        (firstFocusable || nav).focus();
+
+        // trap focus
+        focusTrapHandler = function (e) {
+          if (e.key === "Tab") {
+            if (focusableElements.length === 0) {
+              e.preventDefault();
+              return;
             }
-          } catch (e) {
-            console.warn('updateNavPosition failed', e);
-          }
-        }
-
-        // debounce resize handler
-        let resizeTimer = null;
-        function onResize() {
-          if (resizeTimer) clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(() => {
-            updateNavPosition();
-          }, 120);
-        }
-
-        // helper to resolve current language and translations at runtime
-        function getCurrentLang() {
-          try {
-            const saved = localStorage.getItem('site_lang');
-            if (saved) return saved;
-          } catch (e) {}
-          const htmlLang = document.documentElement.lang || '';
-          return htmlLang.indexOf('pt') === 0 ? 'pt' : 'en';
-        }
-
-        function t(key) {
-          const lang = getCurrentLang();
-          return (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || TRANSLATIONS.pt[key] || key;
-        }
-
-        // initialize position
-        updateNavPosition();
-        window.addEventListener('resize', onResize);
-
-        function openMenu() {
-          previousActiveElement = document.activeElement;
-          // ensure position up-to-date before opening
-          updateNavPosition();
-          menuToggle.classList.add("active");
-          nav.classList.add("active");
-          menuOverlay.classList.add("active");
-          menuToggle.setAttribute("aria-expanded", "true");
-          menuToggle.setAttribute("aria-label", t('menu.close'));
-          nav.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-
-          // setup focusable elements inside nav
-          focusableElements = Array.from(
-            nav.querySelectorAll(
-              'a, button, input, textarea, [tabindex]:not([tabindex="-1"])'
-            )
-          ).filter((el) => !el.hasAttribute("disabled"));
-          firstFocusable = focusableElements[0] || nav;
-          lastFocusable = focusableElements[focusableElements.length - 1] || nav;
-
-          // focus first
-          (firstFocusable || nav).focus();
-
-          // trap focus
-          focusTrapHandler = function (e) {
-            if (e.key === "Tab") {
-              if (focusableElements.length === 0) {
+            if (e.shiftKey) {
+              if (document.activeElement === firstFocusable) {
                 e.preventDefault();
-                return;
+                lastFocusable.focus();
               }
-              if (e.shiftKey) {
-                if (document.activeElement === firstFocusable) {
-                  e.preventDefault();
-                  lastFocusable.focus();
-                }
-              } else {
-                if (document.activeElement === lastFocusable) {
-                  e.preventDefault();
-                  firstFocusable.focus();
-                }
+            } else {
+              if (document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
               }
-            } else if (e.key === "Escape") {
-              closeMenu();
             }
-          };
-
-          document.addEventListener("keydown", focusTrapHandler);
-        }
-
-        function closeMenu() {
-          menuToggle.classList.remove("active");
-          nav.classList.remove("active");
-          menuOverlay.classList.remove("active");
-          menuToggle.setAttribute("aria-expanded", "false");
-          menuToggle.setAttribute("aria-label", t('menu.open'));
-          nav.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-
-          try {
-            document.removeEventListener("keydown", focusTrapHandler);
-          } catch (e) {}
-
-          focusTrapHandler = null;
-
-          // restore focus
-          if (previousActiveElement && typeof previousActiveElement.focus === "function") {
-            previousActiveElement.focus();
-          }
-        }
-
-        // toggle opens/closes
-        menuToggle.addEventListener("click", () => {
-          if (nav.classList.contains("active")) {
+          } else if (e.key === "Escape") {
             closeMenu();
-          } else {
-            openMenu();
           }
-        });
+        };
 
-        // Fecha o menu ao clicar em um link (defensive: only if links present)
-        if (navLinks && navLinks.length) {
-          navLinks.forEach((link) => {
-            link.addEventListener("click", closeMenu);
-          });
+        document.addEventListener("keydown", focusTrapHandler);
+      }
+
+      function closeMenu() {
+        menuToggle.classList.remove("active");
+        nav.classList.remove("active");
+        menuOverlay.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+        nav.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        try {
+          document.removeEventListener("keydown", focusTrapHandler);
+        } catch (e) {}
+
+        focusTrapHandler = null;
+
+        // restore focus
+        if (previousActiveElement && typeof previousActiveElement.focus === "function") {
+          previousActiveElement.focus();
         }
+      }
 
-        // Fecha o menu ao clicar no overlay
-        menuOverlay.addEventListener("click", closeMenu);
-      })();
+      // toggle opens/closes
+      menuToggle.addEventListener("click", () => {
+        if (nav.classList.contains("active")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      // Fecha o menu ao clicar em um link
+      navLinks.forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      // Fecha o menu ao clicar no overlay
+      menuOverlay.addEventListener("click", closeMenu);
 
       // (nav-close removed) close handled via overlay and links
 
@@ -3443,190 +3254,6 @@
         }
       };
 
-      // Additional translations for newly marked keys
-      // Portuguese (pt)
-      Object.assign(TRANSLATIONS.pt, {
-        "cta.portfolio": "Veja Meu Portfólio",
-        "cta.linkedin": "Conecte-se no LinkedIn",
-        "about.description": "Minha paixão está em todo o ciclo: da pesquisa e validação de necessidades de usuários à criação de interfaces atraentes e funcionais.",
-        "about.skill.user_focus": "Foco no Usuário",
-        "about.user.interviews": "Entrevistas e Pesquisa",
-        "about.user.usability": "Testes de Usabilidade",
-        "about.user.journeys": "Criação de User Journeys",
-        "about.user.personas": "Desenvolvimento de Personas",
-        "about.skill.tech": "Habilidade Técnica",
-        "about.tech.figma": "Figma",
-        "about.tech.adobe": "Adobe XD & Photoshop",
-        "about.tech.illustrator": "Adobe Illustrator",
-        "about.tech.designsystems": "Aplicação de Design Systems",
-        "about.skill.business": "Resultados de Negócio",
-        "about.business.checkout": "Otimização de fluxos de checkout",
-        "about.business.conversion": "Melhoria em taxas de conversão",
-        "about.business.b2b": "Design de apps B2B complexos",
-        "about.business.international": "Soluções para clientes internacionais",
-        "slide.builderall.title": "Ferramenta Drag-and-Drop | Builderall Website Builder",
-        "slide.builderall.desc": "Projeto de reestruturação de UI/UX para editor de websites.",
-        "slide.booking.title": "Booking | Sistema de Agendamento | Builderall",
-        "slide.booking.desc": "Desenvolvimento de um sistema completo de agendamento online.",
-        "slide.chatbot.title": "Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager",
-        "slide.chatbot.desc": "Criação de interface de gestão de leads e automação via WhatsApp.",
-        "slide.bergen.title": "Website | Time de Basquetebol Norueguês | Bergen Elite Basketball",
-        "slide.bergen.desc": "Website Esportivo (Cliente da Noruega) com foco em engajamento.",
-        "slide.crm.title": "CRM | Wordpress for Builderall",
-        "slide.crm.desc": "Interface de Análise de Dados para gerenciar funis de vendas.",
-        "slide.crm_whatsapp.title": "CRM - Plataforma CRM e Chatbot | WhatsApp Launch Manager",
-        "slide.crm_whatsapp.desc": "Redesign de landing page de produto com foco em conversão.",
-        "slide.bball.title": "BBall | Gerenciador de Basquetebol",
-        "slide.bball.desc": "Plataforma de gestão esportiva completa para times de basquetebol.",
-        "slide.peixinhos.title": "Mídias Sociais | Peixinhos III - Restaurante e Petiscaria",
-        "slide.peixinhos.desc": "Estratégia e Design de conteúdo para redes sociais, fortalecendo a presença digital de um restaurante local.",
-        "portfolio.full": "Ver Portfólio Completo no Behance",
-        "experience.limodas.info": "A Li Modas Oficial é uma loja virtual especializada em vestidos temáticos infantis e juvenis, oferecendo produtos no atacado e varejo para todo o Brasil e exterior.",
-        "experience.limodas.duration": "Duração: nov 2018 - out 2025 (7 anos)",
-        "experience.limodas.location": "Localização: Marília e Região, Brasil",
-        "experience.limodas.desc": "Criação de toda a identidade visual e materiais de marketing digital para loja virtual especializada em moda infantil e juvenil, impulsionando a presença de marca em mídias sociais.",
-        "experience.admake.info": "A Admake é uma agência especializada em e-commerce e marketing digital.",
-        "experience.admake.duration": "Duração: mai 2013 - dez 2013 (8 meses)",
-        "experience.admake.location": "Localização: Marília, São Paulo, Brasil",
-        "experience.admake.desc": "Desenvolvimento de layouts e front-end para websites institucionais e campanhas de marketing digital de clientes da agência, garantindo a performance visual e técnica.",
-        "experience.horizon.info": "A Horizon Marketing é uma empresa especializada em marketing para varejo.",
-        "experience.horizon.duration": "Duração: fev 2012 - mai 2013 (1 ano e 4 meses)",
-        "experience.horizon.location": "Localização: Marília, São Paulo, Brasil",
-        "experience.horizon.desc": "Focado na criação de identidades visuais de marca e design de interfaces para websites e landing pages, garantindo a consistência da marca no ambiente digital.",
-        "experience.fisk.info": "A FISK Marília é uma escola de idiomas que oferece cursos de inglês e espanhol.",
-        "experience.fisk.duration": "Duração: fev 2010 - out 2010 (9 meses)",
-        "experience.fisk.location": "Localização: Marília, São Paulo, Brasil",
-        "experience.fisk.desc": "Produção de materiais gráficos promocionais (folhetos, cartazes), design de anúncios e atualização do website institucional da escola para suporte às campanhas de matrícula.",
-        "experience.tray.info": "A Tray é uma plataforma de e-commerce robusta, pertencente à Locaweb, que facilita a criação e gestão de lojas virtuais.",
-        "experience.tray.duration": "Duração: out 2008 - set 2010 (2 anos)",
-        "experience.tray.location": "Localização: Marília, São Paulo, Brasil",
-        "experience.tray.desc": "Criação de layouts de e-commerce e banners promocionais, garantindo a atração visual e a performance de vendas para lojas virtuais, otimizando a experiência do usuário em plataformas de comércio eletrônico.",
-        "experience.rednose.info": "A loja Red Nose é uma marca de moda masculina com estilo urbano, esportivo e casual.",
-        "experience.rednose.duration": "Duração: jan 2008 - out 2008 (10 meses)",
-        "experience.rednose.location": "Localização: Marília, São Paulo, Brasil",
-        "experience.rednose.desc": "Responsável pelo design web e fotografia de produtos para marca de moda masculina, criando identidade visual consistente e material fotográfico de alta qualidade para catálogos e campanhas digitais.",
-        "contact.open": "Estou sempre aberto a novas oportunidades e projetos que exijam uma combinação de visão de design e profundidade técnica. Entre em contato!",
-        "experience.builderall.title": "Senior User Experience Designer",
-        "experience.builderall.company": "Builderall",
-        "experience.builderall.info": "A Builderall é uma plataforma de marketing digital completa que oferece diversas ferramentas em um único ambiente, com o objetivo de ajudar empreendedores e empresas a crescerem online.",
-        "experience.builderall.duration": "Duração: dez 2014 - out 2025 (10 anos e 11 meses)",
-        "experience.builderall.location": "Localização: Orlando, Flórida (Remoto)",
-        "experience.builderall.desc": "Responsável pelo design e usabilidade de uma suíte de 50+ ferramentas de marketing digital. Liderei o redesign de produtos-chave, resultando em uma melhoria significativa na retenção e satisfação do usuário.",
-        "share.prompt": "💎 Achou meu trabalho interessante? Compartilhe com quem está procurando um designer de verdade!",
-        "share.twitter": "Twitter",
-        "share.facebook": "Facebook",
-        "share.whatsapp": "WhatsApp",
-        "share.twitter.title": "Compartilhar no Twitter/X",
-        "share.facebook.title": "Compartilhar no Facebook",
-        "share.whatsapp.title": "Compartilhar no WhatsApp",
-        "cta.portfolio.title": "Veja Meu Portfólio",
-        "portfolio.intro": "Uma seleção de trabalhos que demonstram meu processo, da pesquisa ao pixel final.",
-        "slider.previous": "Slide Anterior",
-        "slider.next": "Próximo Slide",
-        "meta.title": "Silvio Yamada | UI/UX Designer com 17 anos de experiência",
-        "meta.description": "UI/UX Designer sênior com 17 anos de experiência em design de interfaces e experiência do usuário. Especialista em transformar complexidade em experiências digitais intuitivas e impactantes.",
-        "meta.og_description": "Eu transformo complexidade em experiências digitais que geram resultados. Portfólio de UI/UX Designer sênior.",
-        "meta.twitter_description": "Eu transformo complexidade em experiências digitais que geram resultados."
-        ,"nav.aria": "Navegação Principal"
-        ,"lang.pt.title": "Português"
-        ,"lang.en.title": "Inglês"
-        ,"menu.open": "Abrir menu"
-        ,"menu.close": "Fechar menu"
-      });
-
-      // English (en)
-      Object.assign(TRANSLATIONS.en, {
-        "cta.portfolio": "See My Portfolio",
-        "cta.linkedin": "Connect on LinkedIn",
-        "about.description": "My passion covers the full cycle: from research and validating user needs to crafting attractive, functional interfaces.",
-        "about.skill.user_focus": "User-Centered",
-        "about.user.interviews": "Interviews & Research",
-        "about.user.usability": "Usability Testing",
-        "about.user.journeys": "User Journeys",
-        "about.user.personas": "Persona Development",
-        "about.skill.tech": "Technical Skills",
-        "about.tech.figma": "Figma",
-        "about.tech.adobe": "Adobe XD & Photoshop",
-        "about.tech.illustrator": "Adobe Illustrator",
-        "about.tech.designsystems": "Design Systems",
-        "about.skill.business": "Business Impact",
-        "about.business.checkout": "Checkout flow optimization",
-        "about.business.conversion": "Conversion rate improvements",
-        "about.business.b2b": "Design for complex B2B apps",
-        "about.business.international": "Solutions for international clients",
-        "slide.builderall.title": "Drag-and-Drop Tool | Builderall Website Builder",
-        "slide.builderall.desc": "UI/UX restructure for a website editor.",
-        "slide.booking.title": "Booking | Scheduling System | Builderall",
-        "slide.booking.desc": "Development of a full-featured online scheduling system.",
-        "share.twitter": "Twitter",
-        "share.facebook": "Facebook",
-        "share.whatsapp": "WhatsApp",
-        "share.twitter.title": "Share on Twitter/X",
-        "share.facebook.title": "Share on Facebook",
-        "share.whatsapp.title": "Share on WhatsApp",
-        "cta.portfolio.title": "See My Portfolio",
-        "portfolio.intro": "A selection of works that demonstrate my process, from research to the final pixel.",
-        "portfolio.full": "View full portfolio on Behance",
-        "slider.previous": "Previous Slide",
-        "slider.next": "Next Slide",
-        "meta.title": "Silvio Yamada | UI/UX Designer — 17 years' experience",
-        "meta.description": "Senior UI/UX Designer with 17 years of experience in interface and user experience design. Expert in turning complexity into intuitive and impactful digital experiences.",
-        "meta.og_description": "I turn complexity into digital experiences that deliver results. Senior UI/UX Designer portfolio.",
-        "meta.twitter_description": "I turn complexity into digital experiences that deliver results.",
-        "nav.aria": "Main Navigation",
-        "lang.pt.title": "Portuguese",
-        "lang.en.title": "English",
-        "menu.open": "Open menu",
-        "menu.close": "Close menu",
-        "slide.chatbot.title": "Chatbot - CRM Platform & Chatbot | WhatsApp Launch Manager",
-        "slide.chatbot.desc": "Lead management UI and WhatsApp automation interface.",
-        "slide.bergen.title": "Website | Bergen Elite Basketball (Norway)",
-        "slide.bergen.desc": "Sports website focused on fan engagement for a Norwegian client.",
-        "slide.crm.title": "CRM | WordPress for Builderall",
-        "slide.crm.desc": "Analytics interface to manage sales funnels.",
-        "slide.crm_whatsapp.title": "CRM - CRM Platform & Chatbot | WhatsApp Launch Manager",
-        "slide.crm_whatsapp.desc": "Product landing page redesign focused on conversion.",
-        "slide.bball.title": "BBall | Basketball Management Platform",
-        "slide.bball.desc": "Complete sports management platform for basketball teams.",
-        "slide.peixinhos.title": "Social Media | Peixinhos III - Restaurant",
-        "slide.peixinhos.desc": "Content strategy and design for social media to boost a local restaurant's presence.",
-        "experience.limodas.info": "Li Modas Oficial is an online store specialized in themed children's and youth dresses, offering wholesale and retail products across Brazil and abroad.",
-        "experience.limodas.duration": "Duration: Nov 2018 - Oct 2025 (7 years)",
-        "experience.limodas.location": "Location: Marília and Surroundings, Brazil",
-        "experience.limodas.desc": "Created the full visual identity and marketing materials for an e-commerce specialized in children's and youth fashion, boosting brand presence on social media.",
-        "experience.admake.info": "Admake is an agency specialized in e-commerce and digital marketing.",
-        "experience.admake.duration": "Duration: May 2013 - Dec 2013 (8 months)",
-        "experience.admake.location": "Location: Marília, São Paulo, Brazil",
-        "experience.admake.desc": "Developed layouts and front-end for institutional websites and digital marketing campaigns for agency clients, ensuring visual performance and technical quality.",
-        "experience.horizon.info": "Horizon Marketing is a company specialized in retail marketing.",
-        "experience.horizon.duration": "Duration: Feb 2012 - May 2013 (1 year, 4 months)",
-        "experience.horizon.location": "Location: Marília, São Paulo, Brazil",
-        "experience.horizon.desc": "Focused on creating brand visual identities and interface designs for websites and landing pages, ensuring brand consistency across digital channels.",
-        "experience.fisk.info": "FISK Marília is a language school offering English and Spanish courses.",
-        "experience.fisk.duration": "Duration: Feb 2010 - Oct 2010 (9 months)",
-        "experience.fisk.location": "Location: Marília, São Paulo, Brazil",
-        "experience.fisk.desc": "Produced promotional graphic materials (flyers, posters), ad design and website updates to support enrollment campaigns.",
-        "experience.tray.info": "Tray is a robust e-commerce platform owned by Locaweb that facilitates creating and managing online stores.",
-        "experience.tray.duration": "Duration: Oct 2008 - Sep 2010 (2 years)",
-        "experience.tray.location": "Location: Marília, São Paulo, Brazil",
-        "experience.tray.desc": "Created e-commerce layouts and promotional banners, ensuring visual attraction and sales performance for online stores, optimizing user experience on e-commerce platforms.",
-        "experience.rednose.info": "Red Nose is a men's fashion brand with an urban, sporty and casual style.",
-        "experience.rednose.duration": "Duration: Jan 2008 - Oct 2008 (10 months)",
-        "experience.rednose.location": "Location: Marília, São Paulo, Brazil",
-        "experience.rednose.desc": "Responsible for web design and product photography for the brand, creating a consistent visual identity and high-quality photographic material for catalogs and digital campaigns.",
-        "contact.open": "I'm always open to new opportunities and projects that require a combination of design vision and technical depth. Get in touch!",
-        "experience.builderall.title": "Senior User Experience Designer",
-        "experience.builderall.company": "Builderall",
-        "experience.builderall.info": "Builderall is an all-in-one digital marketing platform that offers multiple tools in a single environment to help entrepreneurs and businesses grow online.",
-        "experience.builderall.duration": "Duration: Dec 2014 - Oct 2025 (10 years, 11 months)",
-        "experience.builderall.location": "Location: Orlando, Florida (Remote)",
-        "experience.builderall.desc": "Responsible for the design and usability of a suite of 50+ digital marketing tools. Led redesigns of key products, resulting in significant improvements in user retention and satisfaction.",
-        "portfolio.full": "See Full Portfolio on Behance",
-        "share.prompt": "💎 Liked my work? Share it with someone who needs a real designer!",
-        "share.twitter.title": "Share on Twitter/X",
-        "share.facebook.title": "Share on Facebook"
-      });
-
       function applyTranslations(lang) {
         const dict = TRANSLATIONS[lang] || TRANSLATIONS.pt;
         document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -3636,44 +3263,6 @@
           if (typeof txt !== "undefined") {
             el.innerHTML = txt;
           }
-        });
-
-        // Tradução de atributos comuns: title, alt, placeholder
-        document.querySelectorAll("[data-i18n-title]").forEach((el) => {
-          const key = el.getAttribute("data-i18n-title");
-          if (!key) return;
-          const txt = dict[key];
-          if (typeof txt !== "undefined") el.title = txt;
-        });
-
-        document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
-          const key = el.getAttribute("data-i18n-alt");
-          if (!key) return;
-          const txt = dict[key];
-          if (typeof txt !== "undefined") el.alt = txt;
-        });
-
-        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-          const key = el.getAttribute("data-i18n-placeholder");
-          if (!key) return;
-          const txt = dict[key];
-          if (typeof txt !== "undefined") el.setAttribute("placeholder", txt);
-        });
-
-        // Tradução para meta tags marcadas com data-i18n-meta (atributo content)
-        document.querySelectorAll("[data-i18n-meta]").forEach((el) => {
-          const key = el.getAttribute("data-i18n-meta");
-          if (!key) return;
-          const txt = dict[key];
-          if (typeof txt !== "undefined") el.setAttribute("content", txt);
-        });
-
-        // Tradução para aria-label quando marcado com data-i18n-aria
-        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-          const key = el.getAttribute("data-i18n-aria");
-          if (!key) return;
-          const txt = dict[key];
-          if (typeof txt !== "undefined") el.setAttribute("aria-label", txt);
         });
 
         // Atualiza atributo lang no <html>
