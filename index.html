@@ -92,7 +92,13 @@
         box-sizing: border-box;
       }
 
+      /* Use :focus-visible to show outlines only for keyboard navigation
+         and remove mouse-click focus borders on desktop */
       *:focus {
+        outline: none;
+      }
+
+      *:focus-visible {
         outline: 2px solid var(--color-primary);
         outline-offset: 2px;
       }
@@ -378,7 +384,7 @@
 
       /* Main navigation (desktop) */
       nav {
-        justify-self: center;
+        justify-self: end;
       }
 
       nav ul {
@@ -450,6 +456,26 @@
       .menu-overlay.active {
         display: block;
         opacity: 1;
+      }
+
+      /* Improved overlay: placed after other rules to ensure proper stacking
+         overlay sits below header (header z-index:1000) and covers content */
+      .menu-overlay {
+        position: fixed;
+        top: 64px; /* starts below header */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.42);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+        z-index: 998; /* below nav (999) and below header (1000) */
+      }
+
+      .menu-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
       }
 
       /* --- Responsividade do Menu (mobile) --- */
@@ -1628,28 +1654,49 @@
           display: flex;
         }
 
+        /* Mobile nav: use transform for smooth GPU-accelerated sliding
+           and keep drawer under the fixed header (starts below header) */
         nav {
           position: fixed;
-          top: 0;
-          right: -100%;
-          width: 280px;
-          height: 100vh;
+          top: 64px; /* start below the header */
+          right: 0;
+          width: min(88%, 360px);
+          max-width: 360px;
+          height: calc(100% - 64px);
           background: rgba(18, 18, 18, 0.98);
           backdrop-filter: blur(20px);
-          transition: right 0.4s ease;
-          z-index: 1000;
-          box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+          transform: translateX(100%);
+          transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+          z-index: 999; /* below header (1000) so header stays visible */
+          box-shadow: -6px 0 28px rgba(0, 0, 0, 0.5);
+          pointer-events: none;
         }
 
         nav.active {
-          right: 0;
+          transform: translateX(0);
+          pointer-events: auto;
         }
 
         nav ul {
+          display: flex;
           flex-direction: column;
-          padding: 80px 30px 30px;
-          gap: 0;
+          padding: 20px 18px 30px; /* tighter padding to show more items */
+          gap: 8px;
           height: 100%;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* Menu text responsiveness: reduce font size on smaller screens
+           and ensure text wraps cleanly inside the drawer */
+        nav ul li a {
+          font-size: clamp(0.95rem, 2.2vw, 1.02rem);
+          padding: 12px 10px;
+          line-height: 1.28;
+          white-space: normal;
+          text-align: left;
+          word-break: break-word;
+          color: var(--color-text-primary);
         }
 
         nav ul li {
@@ -2006,6 +2053,13 @@
           font-size: 0.75rem;
         }
 
+        /* further reduce menu text on very small devices */
+        nav ul li a {
+          font-size: clamp(0.84rem, 3.0vw, 0.96rem);
+          padding: 10px 8px;
+          line-height: 1.24;
+        }
+
         nav ul li a {
           font-size: 1rem;
           padding: 16px 0;
@@ -2143,6 +2197,59 @@
         .container {
           padding: 30px 0;
         }
+      }
+
+      /* Strong override: ensure SVG flags are visible but scaled down for better balance */
+      .lang-toggle.variant-combo .lang-btn {
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.18)) !important;
+        border: 1px solid rgba(255,255,255,0.035) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.38) !important;
+        overflow: visible !important;
+        /* keep size responsive but a bit smaller */
+        width: clamp(34px, 3.2vw, 44px) !important;
+        height: clamp(34px, 3.2vw, 44px) !important;
+        border-radius: 12px !important;
+        padding: 0 !important;
+      }
+
+      .lang-toggle.variant-combo .lang-btn .lang-flag {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .lang-toggle.variant-combo .lang-btn .svg-flag {
+        display: block !important;
+        width: 58% !important;
+        height: auto !important;
+        max-width: 46px !important;
+      }
+
+      .lang-toggle.variant-combo .lang-btn .emoji { display: none !important; }
+
+      /* Prevent overly large increase on very wide screens: provide modest scaling */
+      @media (min-width: 1200px) {
+        .lang-toggle.variant-combo .lang-btn {
+          width: 46px !important;
+          height: 46px !important;
+          border-radius: 13px !important;
+        }
+        .lang-toggle.variant-combo .lang-btn .svg-flag {
+          width: 60% !important;
+        }
+        .lang-toggle.variant-combo { gap: 12px !important; }
+      }
+
+      @media (min-width: 1600px) {
+        .lang-toggle.variant-combo .lang-btn {
+          width: 48px !important;
+          height: 48px !important;
+          border-radius: 14px !important;
+        }
+        .lang-toggle.variant-combo .lang-btn .svg-flag {
+          width: 62% !important;
+        }
+        .lang-toggle.variant-combo { gap: 14px !important; }
       }
     </style>
   </head>
