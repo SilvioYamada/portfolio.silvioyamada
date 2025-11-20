@@ -799,49 +799,33 @@
         margin-bottom: 5px;
       }
 
+      /* Job heading with logo */
+      .job-heading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .job-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: inline-block;
+        border: 2px solid var(--color-background);
+      }
+
+      @media (max-width: 768px) {
+        .job-logo {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
       .experience-card h4 {
         font-size: 1.1rem;
         color: #fff;
         margin-bottom: 15px;
-      }
-
-      .experience-logo {
-        width: auto;
-        /* height scales with surrounding text */
-        height: 1.2em;
-        max-height: 3.5rem;
-        display: block;
-        border-radius: 12px;
-        object-fit: contain;
-        background: rgba(255, 255, 255, 0.03);
-        padding: 8px;
-      }
-
-      /* (Removido) estilos do wrapper circular do logo Builderall */
-
-      /* Inline small logo to sit next to the h3 title */
-      /* removed: .experience-logo-inline (logo removed from markup) */
-
-      .experience-header {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 8px;
-      }
-
-      .experience-text h3 {
-        margin: 0 0 4px 0;
-      }
-
-      @media (max-width: 520px) {
-        .experience-header {
-          gap: 12px;
-        }
-
-        .experience-logo {
-          height: 1.15em;
-          padding: 6px;
-        }
       }
 
       .experience-card .company-info {
@@ -2084,12 +2068,11 @@
 
           <div class="experience-grid">
             <article class="experience-card">
-              <div class="experience-header">
-                <div class="experience-text">
-                  <h3>Senior User Experience Designer</h3>
-                  <h4>Builderall</h4>
-                </div>
+              <div class="job-heading">
+                <img src="img/builderall.png" alt="Builderall logo" class="job-logo" />
+                <h3>Senior User Experience Designer</h3>
               </div>
+              <h4>Builderall</h4>
               <p class="company-info">
                 A Builderall é uma plataforma de marketing digital completa que
                 oferece diversas ferramentas em um único ambiente, com o
