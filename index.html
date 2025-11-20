@@ -3201,22 +3201,31 @@
         }
       }
 
-      // toggle opens/closes
-      menuToggle.addEventListener("click", () => {
-        if (nav.classList.contains("active")) {
-          closeMenu();
-        } else {
-          openMenu();
+      // toggle opens/closes (guarded)
+      if (menuToggle && nav) {
+        menuToggle.addEventListener("click", () => {
+          if (nav.classList.contains("active")) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        });
+
+        // Close the menu when clicking a nav link (attach defensively)
+        if (navLinks && navLinks.length) {
+          navLinks.forEach((link) => {
+            try { link.addEventListener("click", closeMenu); } catch (e) {}
+          });
         }
-      });
 
-      // Fecha o menu ao clicar em um link
-      navLinks.forEach((link) => {
-        link.addEventListener("click", closeMenu);
-      });
-
-      // Fecha o menu ao clicar no overlay
-      menuOverlay.addEventListener("click", closeMenu);
+        // Close the menu when clicking the overlay
+        if (menuOverlay) {
+          menuOverlay.addEventListener("click", closeMenu);
+        }
+      } else {
+        // Defensive fallback: if elements missing, no-op
+        console.warn("Menu elements not found: menuToggle or nav missing.");
+      }
 
       // (nav-close removed) close handled via overlay and links
 
