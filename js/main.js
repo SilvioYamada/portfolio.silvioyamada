@@ -156,17 +156,34 @@
           });
         };
 
-        // Highlight clicked link immediately for better feedback.
+        // Highlight clicked link immediately for better feedback and persist until scroll.
+        let manualNav = false;
+        let lastManualId = null;
         navLinks.forEach((link) => {
-          link.addEventListener("click", () => {
+          link.addEventListener("click", (e) => {
             const target = link.getAttribute("href") || "";
             const id = target.startsWith("#") ? target.slice(1) : target;
-            if (id) setActiveLink(id);
+            if (id) {
+              setActiveLink(id);
+              manualNav = true;
+              lastManualId = id;
+              // Aguarda o scroll terminar e verifica se a âncora está visível
+              setTimeout(() => {
+                manualNav = false;
+                // Garante que o ativo permaneça na âncora clicada se ela estiver visível
+                const section = document.getElementById(id);
+                if (section) {
+                  const rect = section.getBoundingClientRect();
+                  if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    setActiveLink(id);
+                  }
+                }
+              }, 600);
+            }
           });
         });
 
-        // Ensure hero/home starts highlighted on load even before observing.
-        setActiveLink("hero");
+        // Não força ativo no hero ao carregar, deixa o scroll spy decidir
 
         const observerOptions = {
           root: null,
@@ -175,6 +192,10 @@
         };
 
         const observer = new IntersectionObserver((entries) => {
+          if (manualNav && lastManualId) {
+            setActiveLink(lastManualId);
+            return;
+          }
           const visibleSections = entries
             .filter((entry) => entry.isIntersecting)
             .sort(
