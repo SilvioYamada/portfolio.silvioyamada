@@ -2,13 +2,13 @@
 
 Landing page project
 
-## Menu active behavior fix
+## Menu active behavior fix (updated)
 
-This branch adds a 'freezeActive' mechanism to improve menu behavior when the site is embedded in a parent (e.g., iframe) and the parent expands the content (fullscreen). The script prevents scrollspy or automatic menu changes while the parent indicates the site is expanded.
+This branch previously explored a 'freezeActive' mechanism, but that feature was removed. The remaining changes in this branch are focused on improving the nav active-state behavior and adding tests.
 
-- Added `freezeAuto` flag (controlled via `postMessage` from parent).
-- Modified nav scrollspy to respect `freezeAuto` and only update active state when the change originates from user clicks.
-- Added Playwright E2E tests to validate behavior.
+- Keep manual navigation active state persistence via `sessionStorage` for internal anchor links.
+- Improve Nav scrollspy to respect manual (clicked) navigation briefly while the user scrolls.
+- Added Playwright E2E tests to validate the behavior.
 
 ### How to run tests locally
 
