@@ -157,22 +157,35 @@ function initNavScrollSpy() {
     link.addEventListener("click", (e) => {
       const target = link.getAttribute("href") || "";
       const id = target.startsWith("#") ? target.slice(1) : target;
-      if (id) {
+      if (!id) return;
+
+      // Only handle internal anchor links (ignore external links)
+      if (target.startsWith("#")) {
+        // Prevent the browser's instant jump
+        e.preventDefault();
+
+        // Smooth scroll into view (gives a nicer transition and controllable timing)
+        const section = document.getElementById(id);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+
         setActiveLink(id);
         manualNav = true;
         lastManualId = id;
+
         // Aguarda o scroll terminar e verifica se a âncora está visível
+        // (melhorando a condição para visibilidade parcial — evita perder o ativo)
         setTimeout(() => {
           manualNav = false;
-          // Garante que o ativo permaneça na âncora clicada se ela estiver visível
-          const section = document.getElementById(id);
           if (section) {
             const rect = section.getBoundingClientRect();
-            if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+            // Se a seção estiver parcialmente ou totalmente visível, mantém o ativo
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
               setActiveLink(id);
             }
           }
-        }, 600);
+        }, 700); // 700ms: usa valor um pouco maior pra acomodar smooth scroll
       }
     });
   });
