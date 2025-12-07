@@ -362,6 +362,27 @@ if (menuToggle && nav) {
 
 // (nav-close removed) close handled via overlay and links
 
+// Add global postMessage listener so parent can freeze/unfreeze menu auto updates
+window.addEventListener('message', (e) => {
+  if (!e.data || !e.data.type) return;
+  try {
+    if (e.data.type === 'freezeActive') {
+      freezeAuto = true;
+      // Force hero/iniciar active visually if possible
+      try {
+        const heroLink = document.querySelector('nav ul li a[href="#hero"]');
+        if (heroLink) {
+          document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
+          heroLink.classList.add('active');
+        }
+      } catch (err) {}
+    }
+    if (e.data.type === 'unfreezeActive') {
+      freezeAuto = false;
+    }
+  } catch (err) { /* ignore */ }
+});
+
 // --- Tradução (i18n) ---
 const TRANSLATIONS = {
   pt: {
