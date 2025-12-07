@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavScrollSpy();
 });
 
-let freezeAuto = false; // if true, ignore automatic updates like scrollspy unless from user click
-
 function initPortfolioSlider() {
   const sliderContainer = document.getElementById("portfolioSlider");
   if (!sliderContainer) return;
@@ -142,9 +140,7 @@ function initNavScrollSpy() {
 
   let currentActive = null;
 
-  // Now setActiveLink respects freezeAuto and accepts an options object
-  const setActiveLink = (id, options = { fromClick: false }) => {
-    if (freezeAuto && !options.fromClick) return; // ignore auto updates while frozen
+  const setActiveLink = (id) => {
     if (currentActive === id || !id) return;
     currentActive = id;
 
@@ -153,7 +149,7 @@ function initNavScrollSpy() {
       link.classList.toggle("active", matches);
     });
 
-    // Notify parent (if embedding) about the active change
+    // Notify parent (if embedding) about the active change (optional)
     if (window.parent && window.parent !== window) {
       try {
         window.parent.postMessage({ type: "activeChanged", active: id }, "*");
@@ -181,7 +177,7 @@ function initNavScrollSpy() {
           section.scrollIntoView({ behavior: "smooth" });
         }
 
-        setActiveLink(id, { fromClick: true });
+        setActiveLink(id);
         manualNav = true;
         lastManualId = id;
 
@@ -198,7 +194,7 @@ function initNavScrollSpy() {
             const rect = section.getBoundingClientRect();
             // Se a seção estiver parcialmente ou totalmente visível, mantém o ativo
             if (rect.top < window.innerHeight && rect.bottom > 0) {
-              setActiveLink(id, { fromClick: false });
+              setActiveLink(id);
             }
           }
         }, 700); // 700ms: usa valor um pouco maior pra acomodar smooth scroll
@@ -212,7 +208,7 @@ function initNavScrollSpy() {
     if (clickInfo && clickInfo.path && clickInfo.path.startsWith('#')) {
       const id = clickInfo.path.slice(1);
       const clickedLink = document.querySelector(`nav ul li a[href="${clickInfo.path}"]`);
-      if (clickedLink) setActiveLink(id, { fromClick: true });
+      if (clickedLink) setActiveLink(id);
       sessionStorage.removeItem('siteMenuClicked');
     }
   } catch (e) {}
@@ -361,30 +357,3 @@ if (menuToggle && nav) {
 }
 
 // (nav-close removed) close handled via overlay and links
-
-// Add global postMessage listener so parent can freeze/unfreeze menu auto updates
-window.addEventListener('message', (e) => {
-  if (!e.data || !e.data.type) return;
-  try {
-    if (e.data.type === 'freezeActive') {
-      freezeAuto = true;
-      // Force hero/iniciar active visually if possible
-      try {
-        const heroLink = document.querySelector('nav ul li a[href="#hero"]');
-        if (heroLink) {
-          document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
-          heroLink.classList.add('active');
-        }
-      } catch (err) {}
-    }
-    if (e.data.type === 'unfreezeActive') {
-      freezeAuto = false;
-    }
-  } catch (err) { /* ignore */ }
-});
-
-// --- Tradução (i18n) ---
-const TRANSLATIONS = {
-  pt: {
-    "nav.home": "Inicial",
-    "nav.about": "Sobre",
