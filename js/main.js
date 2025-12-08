@@ -1,3 +1,14 @@
+(function loadIframeComm() {
+  try {
+    if (document.querySelector('script[src="js/iframe-comm.js"]')) return;
+    const s = document.createElement('script');
+    s.src = 'js/iframe-comm.js';
+    s.defer = true;
+    s.onload = () => { window.__iframeCommLoaded = true; }; 
+    document.head.appendChild(s);
+  } catch (e) { /* ignore */ }
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   initPortfolioSlider();
   initScrollAnimations();
@@ -381,124 +392,5 @@ const TRANSLATIONS = {
     "skills.user.li3": "Criação de User Journeys",
     "skills.user.li4": "Desenvolvimento de Personas",
     "skills.tech.title": "Habilidade Técnica",
-    "skills.tech.li1": "Figma",
-    "skills.tech.li2": "Adobe XD & Photoshop",
-    "skills.tech.li3": "Adobe Illustrator",
-    "skills.tech.li4": "Aplicação de Design Systems",
-    "skills.business.title": "Resultados de Negócio",
-    "skills.business.li1": "Otimização de fluxos de checkout",
-    "skills.business.li2": "Melhoria nas taxas de conversão",
-    "skills.business.li3": "Design para apps B2B complexos",
-    "skills.business.li4": "Soluções para clientes internacionais",
-    "portfolio.cta": "Ver Portfólio Completo no Behance",
-
-    "slide1.title": "Ferramenta Drag-and-Drop | Builderall Website Builder",
-    "slide1.desc":
-      "Projeto de reestruturação de UI/UX para editor de websites.",
-    "slide1.alt": "Ferramenta Drag-and-Drop — Builderall Website Builder",
-    "slide1.aria": "Abrir projeto Builderall Website Builder no Behance",
-
-    "slide2.title": "Booking | Sistema de Agendamento",
-    "slide2.desc":
-      "Desenvolvimento de uma plataforma completa de agendamento online.",
-    "slide2.alt": "Booking — Sistema de Agendamento",
-    "slide2.aria": "Abrir projeto Booking no Behance",
-
-    "slide3.title": "Chatbot — Plataforma CRM e WhatsApp Launch Manager",
-    "slide3.desc": "Interface de gestão de leads e automação via WhatsApp.",
-    "slide3.alt": "Chatbot CRM — WhatsApp Launch Manager",
-    "slide3.aria": "Abrir projeto Chatbot no Behance",
-
-    "slide4.title": "Bergen Elite — Website Esportivo",
-    "slide4.desc": "Website esportivo com foco em engajamento do público.",
-    "slide4.alt": "Bergen Elite — Website Esportivo",
-    "slide4.aria": "Abrir projeto Bergen Elite no Behance",
-
-    "slide5.title": "CRM — Wordpress for Builderall",
-    "slide5.desc": "Interface de análise para gerenciar funis de vendas.",
-    "slide5.alt": "CRM — Wordpress for Builderall",
-    "slide5.aria": "Abrir projeto CRM Wordpress no Behance",
-
-    "slide6.title": "CRM — WhatsApp Launch Manager",
-    "slide6.desc": "Redesign de landing page com foco em conversão.",
-    "slide6.alt": "CRM WhatsApp Launch Manager",
-    "slide6.aria": "Abrir projeto CRM WhatsApp no Behance",
-
-    "slide7.title": "BBall — Gerenciador de Basquetebol",
-    "slide7.desc":
-      "Plataforma de gestão esportiva completa para times de basquetebol.",
-    "slide7.alt": "BBall — Gerenciador de Basquetebol",
-    "slide7.aria": "Abrir projeto BBall no Behance",
-
-    "slide8.title": "Mídias Sociais — Peixinhos Restaurante",
-    "slide8.desc":
-      "Estratégia e design de conteúdo para fortalecer presença digital local.",
-    "slide8.alt": "Peixinhos Restaurante — Mídias Sociais",
-    "slide8.aria": "Abrir projeto Peixinhos no Behance",
-
-    "exp.builderall.companyInfo":
-      "A Builderall é uma plataforma de marketing digital completa que oferece diversas ferramentas em um único ambiente, com o objetivo de ajudar empreendedores e empresas a crescerem online.",
-    "exp.builderall.description":
-      "Responsável pelo design e usabilidade de uma suíte de 50+ ferramentas de marketing digital. Liderei o redesign de produtos-chave, resultando em melhorias na retenção e satisfação do usuário.",
-    "exp.limodas.title": "Designer Gráfico",
-    "exp.limodas.companyInfo":
-      "A Li Modas Oficial é uma loja virtual especializada em vestidos temáticos infantis e juvenis, oferecendo produtos no atacado e varejo para todo o Brasil e exterior.",
-    "exp.limodas.description":
-      "Criação de identidade visual e materiais de marketing digital para e-commerce focado em moda infantil, impulsionando presença da marca nas redes sociais.",
-    "exp.admake.companyInfo":
-      "A Admake é uma agência especializada em e-commerce e marketing digital.",
-    "exp.admake.description":
-      "Desenvolvimento de layouts e front-end para websites institucionais e campanhas de marketing digital, garantindo desempenho visual e técnico.",
-    "exp.horizon.title": "Gráfico & Web Designer",
-    "exp.horizon.companyInfo":
-      "A Horizon Marketing é uma empresa especializada em marketing para varejo.",
-    "exp.horizon.description":
-      "Focado na criação de identidades visuais e design de interfaces para websites e landing pages, garantindo consistência da marca no digital.",
-    "exp.fisk.title": "Gráfico & Web Designer",
-    "exp.fisk.companyInfo":
-      "A FISK Marília é uma escola de idiomas que oferece cursos de inglês e espanhol.",
-    "exp.fisk.description":
-      "Produção de materiais gráficos promocionais, design de anúncios e atualização do website institucional para suportar campanhas de matrícula.",
-    "exp.tray.companyInfo":
-      "A Tray é uma plataforma de e-commerce robusta, pertencente à Locaweb, que facilita a criação e gestão de lojas virtuais.",
-    "exp.tray.description":
-      "Criação de layouts de e-commerce e banners promocionais para melhorar a atratividade visual e performance de vendas, otimizando a experiência do usuário.",
-    "exp.rednose.title": "Web Designer / Fotografia",
-    "exp.rednose.companyInfo":
-      "A Red Nose é uma marca de moda masculina com estilo urbano, esportivo e casual.",
-    "exp.rednose.description":
-      "Responsável pelo design web e fotografia de produtos, criando identidade visual consistente e material fotográfico de alta qualidade para catálogos e campanhas.",
-
-    "share.text":
-      "💎 Achou meu trabalho interessante? Compartilhe com quem está procurando um designer de verdade!",
-    "share.twitter.title": "Compartilhar no Twitter",
-    "share.facebook.title": "Compartilhar no Facebook",
-    "share.whatsapp.title": "Compartilhar no WhatsApp",
-  },
-  en: {
-    "nav.home": "Home",
-    "nav.about": "About",
-    "nav.portfolio": "Portfolio",
-    "nav.experience": "Experience",
-    "nav.contact": "Contact",
-    "hero.title":
-      "Hi, I'm Silvio Yamada. <br />I turn complexity into digital experiences that deliver results.",
-    "hero.subtitle":
-      "With 17 years of experience, I focus on creating solutions that align user needs with business goals.",
-    "section.what": "What I Bring to the Table",
-    "portfolio.title": "Selected Portfolio",
-    "portfolio.subtitle":
-      "A curated selection of projects that show my process — from research to the final pixel.",
-    "cta.portfolio": "See My Portfolio",
-    "cta.linkedin": "Connect on LinkedIn",
-    "about.paragraph":
-      "My passion spans the full product lifecycle: from user research and needs validation to crafting attractive, highly usable interfaces.",
-    "skills.user.title": "User-centered",
-    "skills.user.li1": "Interviews & Research",
-    "skills.user.li2": "Usability Testing",
-    "skills.user.li3": "User Journeys",
-    "skills.user.li4": "Persona Development",
-    "skills.tech.title": "Technical Skills",
-    "skills.tech.li1": "Figma",
   }
 };
