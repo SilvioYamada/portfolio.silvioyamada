@@ -150,6 +150,12 @@ function initNavScrollSpy() {
     });
   };
 
+  // Guard: If a parent embedding page disables auto hash-based navigation,
+  // we avoid auto-updating the active link from the scroll spy.
+  const isHashNavigationAllowed = () => {
+    return !(window.__allowHashNavigationFromParent === false);
+  };
+
   // Highlight clicked link immediately for better feedback and persist until scroll.
   let manualNav = false;
   let lastManualId = null;
@@ -182,6 +188,7 @@ function initNavScrollSpy() {
             const rect = section.getBoundingClientRect();
             // Se a seção estiver parcialmente ou totalmente visível, mantém o ativo
             if (rect.top < window.innerHeight && rect.bottom > 0) {
+              // allow manual clicks to update active state even when parent disabled auto updates
               setActiveLink(id);
             }
           }
@@ -199,10 +206,15 @@ function initNavScrollSpy() {
   };
 
   const observer = new IntersectionObserver((entries) => {
+    // If manual navigation happened, keep that state
     if (manualNav && lastManualId) {
       setActiveLink(lastManualId);
       return;
     }
+
+    // If parent disabled hash-anchored navigation, skip updating active link
+    if (!isHashNavigationAllowed()) return;
+
     const visibleSections = entries
       .filter((entry) => entry.isIntersecting)
       .sort(
@@ -488,164 +500,5 @@ const TRANSLATIONS = {
     "skills.user.li4": "Persona Development",
     "skills.tech.title": "Technical Skills",
     "skills.tech.li1": "Figma",
-    "skills.tech.li2": "Adobe XD & Photoshop",
-    "skills.tech.li3": "Adobe Illustrator",
-    "skills.tech.li4": "Design Systems",
-    "skills.business.title": "Business Impact",
-    "skills.business.li1": "Checkout flow optimization",
-    "skills.business.li2": "Conversion rate improvements",
-    "skills.business.li3": "Design for complex B2B apps",
-    "skills.business.li4": "Solutions for international clients",
-    "experience.title": "Proven Experience",
-    "portfolio.cta": "See Full Portfolio on Behance",
-    "slide1.title": "Drag-and-Drop Editor | Builderall Website Builder",
-    "slide1.desc": "UI/UX restructuring project for a website editor.",
-    "slide1.alt": "Drag-and-Drop Editor — Builderall Website Builder",
-    "slide1.aria": "Open Builderall Website Builder project on Behance",
-    "slide2.title": "Booking | Online Scheduling System",
-    "slide2.desc": "Development of a complete online scheduling platform.",
-    "slide2.alt": "Booking — Online Scheduling System",
-    "slide2.aria": "Open Booking project on Behance",
-    "slide3.title": "Chatbot — CRM & WhatsApp Launch Manager",
-    "slide3.desc": "Lead management interface and WhatsApp automation.",
-    "slide3.alt": "Chatbot CRM — WhatsApp Launch Manager",
-    "slide3.aria": "Open Chatbot project on Behance",
-    "slide4.title": "Bergen Elite — Sports Website",
-    "slide4.desc": "Sports website focused on audience engagement.",
-    "slide4.alt": "Bergen Elite — Sports Website",
-    "slide4.aria": "Open Bergen Elite project on Behance",
-    "slide5.title": "CRM — Wordpress for Builderall",
-    "slide5.desc": "Analytics interface for managing sales funnels.",
-    "slide5.alt": "CRM — Wordpress for Builderall",
-    "slide5.aria": "Open CRM Wordpress project on Behance",
-    "slide6.title": "CRM — WhatsApp Launch Manager",
-    "slide6.desc": "Landing page redesign focused on conversion.",
-    "slide6.alt": "CRM WhatsApp Launch Manager",
-    "slide6.aria": "Open CRM WhatsApp project on Behance",
-    "slide7.title": "BBall — Basketball Management System",
-    "slide7.desc": "Complete sports management platform for basketball teams.",
-    "slide7.alt": "BBall — Basketball Management System",
-    "slide7.aria": "Open BBall project on Behance",
-    "slide8.title": "Social Media — Peixinhos Restaurante",
-    "slide8.desc":
-      "Content strategy and design to strengthen a local restaurant's digital presence.",
-    "slide8.alt": "Peixinhos Restaurante — Social Media",
-    "slide8.aria": "Open Peixinhos project on Behance",
-    "exp.builderall.companyInfo":
-      "Builderall is a comprehensive digital marketing platform that provides many tools in a single environment to help entrepreneurs and businesses grow online.",
-    "exp.builderall.description":
-      "Responsible for the design and usability of a suite of 50+ marketing tools. I led key product redesigns that significantly improved user retention and satisfaction.",
-    "exp.limodas.title": "Graphic Designer",
-    "exp.limodas.companyInfo":
-      "Li Modas Oficial is an online store specialized in themed children's and youth dresses, offering wholesale and retail across Brazil and abroad.",
-    "exp.limodas.description":
-      "Created full visual identity and digital marketing assets for an e-commerce focused on children's fashion, boosting brand presence on social media.",
-    "exp.admake.companyInfo":
-      "Admake is an agency specialized in e-commerce and digital marketing.",
-    "exp.admake.description":
-      "Developed layouts and front-end for corporate websites and digital marketing campaigns, ensuring visual quality and technical performance.",
-    "exp.horizon.title": "Graphic & Web Designer",
-    "exp.horizon.companyInfo":
-      "Horizon Marketing is a company specialized in retail marketing.",
-    "exp.horizon.description":
-      "Focused on brand visual identities and interface design for websites and landing pages, ensuring brand consistency across digital channels.",
-    "exp.fisk.title": "Graphic & Web Designer",
-    "exp.fisk.companyInfo":
-      "FISK Marília is a language school offering English and Spanish courses.",
-    "exp.fisk.description":
-      "Produced promotional graphic materials (flyers, posters), ad designs and updated the institutional website to support enrollment campaigns.",
-    "exp.tray.companyInfo":
-      "Tray is a robust e-commerce platform by Locaweb that simplifies creating and managing online stores.",
-    "exp.tray.description":
-      "Created e-commerce layouts and promotional banners to improve visual appeal and sales performance, optimizing user experience on commerce platforms.",
-    "exp.rednose.title": "Web Designer / Photography",
-    "exp.rednose.companyInfo":
-      "Red Nose is a men's fashion brand with an urban, sporty and casual style.",
-    "exp.rednose.description":
-      "Responsible for web design and product photography, creating consistent visual identity and high-quality photo material for catalogs and digital campaigns.",
-    "contact.paragraph":
-      "I’m open to new opportunities and projects that require both design vision and technical depth. Get in touch!",
-    "share.text":
-      "💎 Liked my work? Share it with someone looking for a real designer!",
-    "share.twitter.title": "Share on Twitter/X",
-    "share.facebook.title": "Share on Facebook",
-    "share.whatsapp.title": "Share on WhatsApp",
-    "btn.view": "View Site",
-    "contact.title": "Ready to Turn Your Challenges into Success?",
-    "contact.paragraph":
-      "I’m open to new opportunities and projects that require both design vision and technical depth. Get in touch!",
-    "contact.linkedin": "LinkedIn",
-    "contact.whatsapp": "WhatsApp",
-    "footer.text": "📏 Built by Silvio | UI/UX Designer © 2025",
-  },
+  }
 };
-
-function applyTranslations(lang) {
-  const dict = TRANSLATIONS[lang] || TRANSLATIONS.pt;
-
-  // innerHTML translations
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.getAttribute("data-i18n");
-    if (!key) return;
-    const txt = dict[key];
-    if (typeof txt !== "undefined") el.innerHTML = txt;
-  });
-
-  // title attributes
-  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
-    const key = el.getAttribute("data-i18n-title");
-    if (!key) return;
-    const txt = dict[key];
-    if (typeof txt !== "undefined") el.setAttribute("title", txt);
-  });
-
-  // alt attributes for images
-  document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
-    const key = el.getAttribute("data-i18n-alt");
-    if (!key) return;
-    const txt = dict[key];
-    if (typeof txt !== "undefined") el.setAttribute("alt", txt);
-  });
-
-  // aria-labels
-  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-    const key = el.getAttribute("data-i18n-aria");
-    if (!key) return;
-    const txt = dict[key];
-    if (typeof txt !== "undefined") el.setAttribute("aria-label", txt);
-  });
-
-  // Update html lang
-  document.documentElement.lang = lang === "pt" ? "pt-br" : "en";
-
-  // Mark active button
-  document.querySelectorAll(".lang-btn").forEach((btn) => {
-    btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
-  });
-
-  try {
-    localStorage.setItem("site_lang", lang);
-  } catch (e) {
-    // ignore
-  }
-}
-
-// Inicializa botões de idioma
-document.querySelectorAll(".lang-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const lang = btn.getAttribute("data-lang");
-    applyTranslations(lang);
-  });
-});
-
-// Aplica linguagem inicial (preferência salva ou PT)
-(function () {
-  let preferred = "pt";
-  try {
-    const saved = localStorage.getItem("site_lang");
-    if (saved) preferred = saved;
-  } catch (e) {
-    // ignore
-  }
-  applyTranslations(preferred);
-})();
