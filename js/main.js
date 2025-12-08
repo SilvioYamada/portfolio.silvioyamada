@@ -164,7 +164,8 @@ function initNavScrollSpy() {
   // Guard: If a parent embedding page disables auto hash-based navigation,
   // we avoid auto-updating the active link from the scroll spy.
   const isHashNavigationAllowed = () => {
-    return !(window.__allowHashNavigationFromParent === false);
+    const domControlled = !!(document.documentElement && document.documentElement.dataset && document.documentElement.dataset.iframeControlled === 'true');
+    return !(window.__allowHashNavigationFromParent === false || domControlled);
   };
 
   // Highlight clicked link immediately for better feedback and persist until scroll.
