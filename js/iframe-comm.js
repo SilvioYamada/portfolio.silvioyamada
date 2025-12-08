@@ -33,6 +33,8 @@
     switch (e.data.type) {
       case 'forceDefaultActive':
         window.__allowHashNavigationFromParent = false;
+        // Mark the DOM so scroll spy can detect the parent control even across reloads
+        try { document.documentElement.dataset.iframeControlled = 'true'; } catch (err) {}
         // Try to set active to hero/home — adjust selector according to your site
         try {
           const defaultLink = document.querySelector('nav ul li a[href="#hero"]') || document.querySelector('nav ul li a[href="#home"]');
@@ -42,9 +44,13 @@
           }
           history.replaceState({page: 'hero'}, '', '#hero');
         } catch (err) { console.warn('forceDefaultActive error', err); }
+        // reply back to parent to confirm we set the default active
+        try { window.parent.postMessage({ type: 'ack_forceDefaultActive' }, e.origin); } catch (err) {}
         break;
       case 'allowHashNavigation':
         window.__allowHashNavigationFromParent = true;
+        try { delete document.documentElement.dataset.iframeControlled; } catch (err) {}
+        try { window.parent.postMessage({ type: 'ack_allowHashNavigation' }, e.origin); } catch (err) {}
         break;
       case 'parentLoaded':
         // optional — parent tell the child it's loaded
