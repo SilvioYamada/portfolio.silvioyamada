@@ -15,6 +15,7 @@
   // Allowed parent origins that can send messages. Update for production.
   const allowedParentOrigins = [
     'http://localhost:8080',
+    'http://127.0.0.1:8080',
     'https://portfolio.silvioyamada.github.io',
     'https://your-parent-site.com',
   ];
@@ -23,7 +24,12 @@
 
   function isAllowedOrigin(origin) {
     if (allowedParentOrigins.includes('*')) return true;
-    return allowedParentOrigins.includes(origin);
+    if (allowedParentOrigins.includes(origin)) return true;
+    try {
+      const url = new URL(origin);
+      if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') return true;
+    } catch (e) {}
+    return false;
   }
 
   window.addEventListener('message', (e) => {
@@ -33,18 +39,24 @@
     switch (e.data.type) {
       case 'forceDefaultActive':
         window.__allowHashNavigationFromParent = false;
-        // Mark the DOM so scroll spy can detect the parent control even across reloads
         try { document.documentElement.dataset.iframeControlled = 'true'; } catch (err) {}
-        // Try to set active to hero/home — adjust selector according to your site
         try {
+          // ensure the child is scrolled to the top (hero visible) before setting active
+          try { window.scrollTo(0, 0); if (document.scrollingElement) document.scrollingElement.scrollTop = 0; } catch (e) {}
+          // temporarily remove smooth scroll for deterministic effect
+          const prev = document.documentElement.style.scrollBehavior;
+          try { document.documentElement.style.scrollBehavior = 'auto'; } catch (e) {}
+
           const defaultLink = document.querySelector('nav ul li a[href="#hero"]') || document.querySelector('nav ul li a[href="#home"]');
           if (defaultLink) {
             document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
             defaultLink.classList.add('active');
           }
           history.replaceState({page: 'hero'}, '', '#hero');
+
+          setTimeout(() => { try { document.documentElement.style.scrollBehavior = prev || ''; } catch (err) {} }, 200);
+
         } catch (err) { console.warn('forceDefaultActive error', err); }
-        // reply back to parent to confirm we set the default active
         try { window.parent.postMessage({ type: 'ack_forceDefaultActive' }, e.origin); } catch (err) {}
         break;
       case 'allowHashNavigation':
