@@ -363,7 +363,7 @@ if (menuToggle && nav) {
 // --- Tradução (i18n) ---
 const TRANSLATIONS = {
   pt: {
-    "nav.home": "Inicial",
+    "nav.home": "Início",
     "nav.about": "Sobre",
     "nav.portfolio": "Portfólio",
     "nav.experience": "Experiência",
