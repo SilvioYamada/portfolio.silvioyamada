@@ -1,4 +1,4 @@
-      /* --- 1. Configurações Globais (Reset e Tema) --- */
+      /* --- 1. Global Settings (Reset & Theme) --- */
       :root {
         --color-background: #121212;
         --color-surface: #1e1e1e;
@@ -37,17 +37,17 @@
         -moz-osx-font-smoothing: grayscale;
       }
 
-      /* Espaçamento para âncoras */
+      /* Anchor spacing */
       section[id] {
         scroll-margin-top: 90px;
       }
 
-      /* Ajuste específico para seções com mais conteúdo */
+      /* Specific adjustment for sections with more content */
       #portfolio {
         scroll-margin-top: 185px;
       }
 
-      /* Scroll suave otimizado */
+      /* Optimized smooth scroll */
       @media (prefers-reduced-motion: no-preference) {
         html {
           scroll-padding-top: 90px;
@@ -145,7 +145,7 @@
         color: #fff;
       }
 
-      /* --- 2. Cabeçalho (Header) e Navegação --- */
+      /* --- 2. Header & Navigation --- */
       header {
         position: fixed;
         top: 24px;
@@ -248,7 +248,7 @@
         .logo span { max-width: 100px; font-size: clamp(0.8rem, 1.0vw, 0.95rem); }
       }
 
-      /* Foto de Perfil com Borda Animada */
+      /* Profile photo with animated border */
       .logo-profile {
         position: relative;
         width: 50px;
@@ -282,7 +282,7 @@
         border: 3px solid var(--color-background);
       }
 
-      /* Menu Hamburger */
+      /* Hamburger Menu */
       .menu-toggle {
         display: none;
         justify-content: center;
@@ -448,7 +448,7 @@
         pointer-events: auto;
       }
 
-      /* --- Responsividade do Menu (mobile) --- */
+      /* --- Menu Responsiveness (mobile) --- */
       @media (max-width: 768px) {
         header {
           padding: 12px 4%;
@@ -625,7 +625,7 @@
         }
       }
 
-      /* --- 3. Botões (CTA) --- */
+      /* --- 3. Buttons (CTA) --- */
       .cta-button {
         display: inline-block;
         padding: 12px 28px;
@@ -699,7 +699,7 @@
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23121212'%3E%3Cpath d='M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z'/%3E%3C/svg%3E");
       }
 
-      /* --- 4. Seção Hero --- */
+      /* --- 4. Hero Section --- */
       #hero {
         min-height: 100vh;
         display: flex;
@@ -771,7 +771,7 @@
         flex-wrap: wrap;
       }
 
-      /* --- 5. Seção Sobre (Perfil) --- */
+      /* --- 5. About Section (Profile) --- */
       #about .container {
         text-align: center;
       }
@@ -825,7 +825,7 @@
         font-weight: 700;
       }
 
-      /* --- 6. Seção Portfólio (Slider Moderno) --- */
+      /* --- 6. Portfolio Section (Modern Slider) --- */
       #portfolio .container {
         max-width: 1200px;
       }
@@ -1038,7 +1038,7 @@
         margin-top: 50px;
       }
 
-      /* --- 7. Seção Experiência (CARDS) --- */
+      /* --- 7. Experience Section (CARDS) --- */
       #experience {
         background: var(--color-surface);
       }
@@ -1219,7 +1219,7 @@
         flex-grow: 1;
       }
 
-      /* Botão Ver Mais nos Cards de Experiência */
+      /* View More button on Experience cards */
       .experience-card .view-more-btn {
         display: inline-flex;
         align-items: center;
@@ -1254,7 +1254,7 @@
         transform: translateX(3px);
       }
 
-      /* --- 8. Seção Contato --- */
+      /* --- 8. Contact Section --- */
       #contact .container {
         text-align: center;
       }
@@ -1341,7 +1341,7 @@
         box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
       }
 
-      /* --- 8.5. Botões de Compartilhamento --- */
+      /* --- 8.5. Share Buttons --- */
       .share-section {
         margin-top: 60px;
         padding-top: 40px;
@@ -1443,7 +1443,7 @@
         transform: translateY(-2px);
       }
 
-      /* --- 9. Rodapé --- */
+      /* --- 9. Footer --- */
       footer {
         text-align: center;
         padding: 30px 20px;
@@ -1460,7 +1460,7 @@
         max-width: 600px;
       }
 
-      /* --- 10. Animações de Scroll (Fade-in) --- */
+      /* --- 10. Scroll Animations (Fade-in) --- */
       .fade-in-section {
         opacity: 0;
         transform: translateY(30px);
@@ -1473,7 +1473,7 @@
         transform: translateY(0);
       }
 
-      /* --- 11. Responsividade (Mobile) --- */
+      /* --- 11. Responsiveness (Mobile) --- */
       @media (max-width: 768px) {
         h1 {
           font-size: 2.2rem;
@@ -1806,7 +1806,7 @@
           justify-content: center;
         }
 
-        /* Compartilhamento mobile */
+        /* Mobile sharing */
         .share-section {
           margin-top: 40px;
           padding-top: 30px;
@@ -1863,7 +1863,7 @@
         }
       }
 
-      /* Melhorias adicionais para dispositivos muito pequenos */
+      /* Additional improvements for very small devices */
       @media (max-width: 480px) {
         h1 {
           font-size: 1.85rem;
@@ -2041,7 +2041,7 @@
           padding: 14px 20px;
         }
 
-        /* Compartilhamento mobile pequeno */
+        /* Small mobile sharing */
         .share-buttons {
           flex-direction: column;
           gap: 10px;
@@ -2078,7 +2078,7 @@
         }
       }
 
-      /* Melhorias de acessibilidade e usabilidade */
+      /* Accessibility & usability improvements */
       @media (hover: none) and (pointer: coarse) {
         /* Dispositivos touch - áreas de toque maiores */
         .cta-button {
@@ -2092,7 +2092,7 @@
         }
       }
 
-      /* Modo paisagem em mobile */
+      /* Mobile landscape mode */
       @media (max-width: 768px) and (orientation: landscape) {
         #hero {
           min-height: 100vh;

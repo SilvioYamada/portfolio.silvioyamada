@@ -20,7 +20,7 @@ function initPortfolioSlider() {
   const totalSlides = slides.length;
   let slideWidth = 0;
 
-  // Aplicar background blur apenas no slide de mídia social
+  // Apply background blur only to the social media slide
   const midiaSocialSlide = sliderContainer.querySelector(".midia-social-slide");
   if (midiaSocialSlide) {
     const img = midiaSocialSlide.querySelector("img");
@@ -174,13 +174,13 @@ function initNavScrollSpy() {
         manualNav = true;
         lastManualId = id;
 
-        // Aguarda o scroll terminar e verifica se a âncora está visível
+        // Wait for the scroll to finish and verify the anchor is visible
         // (melhorando a condição para visibilidade parcial — evita perder o ativo)
         setTimeout(() => {
           manualNav = false;
           if (section) {
             const rect = section.getBoundingClientRect();
-            // Se a seção estiver parcialmente ou totalmente visível, mantém o ativo
+            // If the section is partially or fully visible, keep it active
             if (rect.top < window.innerHeight && rect.bottom > 0) {
               setActiveLink(id);
             }
@@ -190,7 +190,7 @@ function initNavScrollSpy() {
     });
   });
 
-  // Não força ativo no hero ao carregar, deixa o scroll spy decidir
+  // Do not force the hero active on load; let the scroll spy decide
 
   const observerOptions = {
     root: null,
@@ -655,7 +655,7 @@ function applyTranslations(lang) {
   }
 }
 
-// Inicializa botões de idioma
+// Initialize language buttons
 document.querySelectorAll(".lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const lang = btn.getAttribute("data-lang");
@@ -663,7 +663,7 @@ document.querySelectorAll(".lang-btn").forEach((btn) => {
   });
 });
 
-// Aplica linguagem inicial (preferência salva ou PT)
+// Apply initial language (saved preference or PT)
 (function () {
   let preferred = "pt";
   try {
