@@ -614,6 +614,13 @@
         }
       }
 
+      /* Enforce nav hidden by default on mobile to avoid accidental appear/ flicker
+         If JavaScript or other CSS try to add 'active', our JS will handle opening */
+      @media (max-width: 768px) {
+        nav { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+        nav.active { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+      }
+
       /* --- 3. Botões (CTA) --- */
       .cta-button {
         display: inline-block;
