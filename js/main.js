@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
       closeMenu();
     }
   } catch (e) {}
+  // Diagnostic logs to help identify why page may appear empty
+  try {
+    console.log("DOMContentLoaded: window.innerWidth=", window.innerWidth);
+    console.log("nav classes:", nav ? nav.className : "no-nav");
+    console.log("overlay classes:", menuOverlay ? menuOverlay.className : "no-overlay");
+    console.log("menuToggle classes:", menuToggle ? menuToggle.className : "no-toggle");
+  } catch (e) {
+    console.warn("diagnostic logs failed", e);
+  }
 });
 
 function initPortfolioSlider() {
