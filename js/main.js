@@ -332,22 +332,33 @@ if (menuToggle && nav) {
   // If the viewport is resized to desktop width while the nav is still open,
   // close the mobile nav to prevent layout breaks or a stuck overlay.
   const DESKTOP_BREAKPOINT = 768; // must match the CSS mobile breakpoint
+  let previousWidth = window.innerWidth;
   window.addEventListener("resize", () => {
     try {
-      if (window.innerWidth > DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
+      const currentWidth = window.innerWidth;
+      // If we've crossed the breakpoint boundary, ensure the mobile menu is closed
+      const crossedToMobile = previousWidth > DESKTOP_BREAKPOINT && currentWidth <= DESKTOP_BREAKPOINT;
+      const crossedToDesktop = previousWidth <= DESKTOP_BREAKPOINT && currentWidth > DESKTOP_BREAKPOINT;
+      if ((crossedToMobile || crossedToDesktop) && nav.classList.contains("active")) {
         closeMenu();
       }
+      previousWidth = currentWidth;
     } catch (e) {
       // ignore errors if nav isn't ready
     }
   });
 
-  // Close menu on orientation change as well (some devices switch from mobile to desktop layout)
+  // Close menu on orientation change as well (some devices switch between breakpoints)
   window.addEventListener("orientationchange", () => {
     try {
-      if (window.innerWidth > DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
-        closeMenu();
-      }
+      // Use a small timeout to allow the browser to update innerWidth after orientationchange
+      setTimeout(() => {
+        const currentWidth = window.innerWidth;
+        if (nav.classList.contains("active")) {
+          closeMenu();
+        }
+        previousWidth = currentWidth;
+      }, 200);
     } catch (e) {}
   });
 } else {
