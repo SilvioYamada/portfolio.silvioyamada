@@ -2,21 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initPortfolioSlider();
   initScrollAnimations();
   initNavScrollSpy();
-  // Ensure the mobile nav is closed on initial load to avoid accidental open state
-  try {
-    if (nav && nav.classList.contains("active")) {
-      closeMenu();
-    }
-  } catch (e) {}
-  // Diagnostic logs to help identify why page may appear empty
-  try {
-    console.log("DOMContentLoaded: window.innerWidth=", window.innerWidth);
-    console.log("nav classes:", nav ? nav.className : "no-nav");
-    console.log("overlay classes:", menuOverlay ? menuOverlay.className : "no-overlay");
-    console.log("menuToggle classes:", menuToggle ? menuToggle.className : "no-toggle");
-  } catch (e) {
-    console.warn("diagnostic logs failed", e);
-  }
 });
 
 function initPortfolioSlider() {
@@ -249,7 +234,6 @@ let focusableElements = [];
 let firstFocusable = null;
 let lastFocusable = null;
 let focusTrapHandler = null;
-let ignoreOpenUntil = 0; // timestamp to suppress opening during resize/transition
 
 function openMenu() {
   previousActiveElement = document.activeElement;
@@ -324,8 +308,6 @@ function closeMenu() {
 // toggle opens/closes (guarded)
 if (menuToggle && nav) {
   menuToggle.addEventListener("click", () => {
-    // Prevent accidental opens immediately after a resize/orientation change
-    if (Date.now() < ignoreOpenUntil) return;
     if (nav.classList.contains("active")) {
       closeMenu();
     } else {
@@ -345,106 +327,6 @@ if (menuToggle && nav) {
   // Close the menu when clicking the overlay
   if (menuOverlay) {
     menuOverlay.addEventListener("click", closeMenu);
-  }
-
-  // If the viewport is resized to desktop width while the nav is still open,
-  // close the mobile nav to prevent layout breaks or a stuck overlay.
-  const DESKTOP_BREAKPOINT = 768; // must match the CSS mobile breakpoint
-  let previousWidth = window.innerWidth;
-  // Debounced resize handler to prevent rapid toggles while resizing window
-  let resizeTimeout = null;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      try {
-        const currentWidth = window.innerWidth;
-        // If we've crossed the breakpoint boundary, ensure the mobile menu is closed
-        const crossedToMobile = previousWidth > DESKTOP_BREAKPOINT && currentWidth <= DESKTOP_BREAKPOINT;
-        const crossedToDesktop = previousWidth <= DESKTOP_BREAKPOINT && currentWidth > DESKTOP_BREAKPOINT;
-        if ((crossedToMobile || crossedToDesktop) && nav.classList.contains("active")) {
-          // Ignore open for a short while to prevent flicker
-          ignoreOpenUntil = Date.now() + 500;
-          closeMenu();
-        }
-        // If the browser shrinks (reduce width) make sure the menu is hidden
-        if (currentWidth <= DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
-          ignoreOpenUntil = Date.now() + 500;
-          closeMenu();
-        }
-        previousWidth = currentWidth;
-      } catch (e) {
-        // ignore errors if nav isn't ready
-      }
-    }, 120);
-  });
-    try {
-      const currentWidth = window.innerWidth;
-      // If we've crossed the breakpoint boundary, ensure the mobile menu is closed
-      const crossedToMobile = previousWidth > DESKTOP_BREAKPOINT && currentWidth <= DESKTOP_BREAKPOINT;
-      const crossedToDesktop = previousWidth <= DESKTOP_BREAKPOINT && currentWidth > DESKTOP_BREAKPOINT;
-      if ((crossedToMobile || crossedToDesktop) && nav.classList.contains("active")) {
-        closeMenu();
-      }
-      previousWidth = currentWidth;
-    } catch (e) {
-      // ignore errors if nav isn't ready
-    }
-  });
-
-  // Close menu on orientation change as well (some devices switch between breakpoints)
-  window.addEventListener("orientationchange", () => {
-    try {
-      // Use a small timeout to allow the browser to update innerWidth after orientationchange
-      setTimeout(() => {
-        const currentWidth = window.innerWidth;
-        if (nav.classList.contains("active")) {
-          ignoreOpenUntil = Date.now() + 500;
-          closeMenu();
-        }
-        previousWidth = currentWidth;
-      }, 200);
-    } catch (e) {}
-  });
-
-  // Extra robust solution: use matchMedia to catch breakpoint changes triggered by devtools
-  try {
-    const mq = window.matchMedia(`(max-width: ${DESKTOP_BREAKPOINT}px)`);
-    const mqHandler = (e) => {
-      if (e.matches && nav.classList.contains("active")) {
-        ignoreOpenUntil = Date.now() + 500;
-        closeMenu();
-      }
-    };
-    if (typeof mq.addEventListener === "function") {
-      mq.addEventListener("change", mqHandler);
-    } else if (typeof mq.addListener === "function") {
-      mq.addListener(mqHandler);
-    }
-  } catch (e) {
-    // matchMedia may not be available in some environments (older browsers)
-  }
-
-  // Observe nav class mutations and make sure it doesn't become active on mobile widths
-  try {
-    if (nav) {
-      const navObserver = new MutationObserver((mutations) => {
-        mutations.forEach((m) => {
-          if (m.attributeName === "class") {
-            const isActive = nav.classList.contains("active");
-            const isMobile = window.innerWidth <= DESKTOP_BREAKPOINT;
-            if (isActive && isMobile) {
-              // If nav becomes active on mobile without user action, close it immediately
-              console.warn("nav: active class added while mobile breakpoint; auto-closing.");
-              ignoreOpenUntil = Date.now() + 500;
-              closeMenu();
-            }
-          }
-        });
-      });
-      navObserver.observe(nav, { attributes: true, attributeFilter: ["class"] });
-    }
-  } catch (e) {
-    // ignore
   }
 } else {
   // Defensive fallback: if elements missing, no-op
