@@ -614,6 +614,17 @@
         }
       }
 
+      /* During a resize (desktop -> mobile), force nav hidden to avoid flicker
+         The JS adds `body.is-resizing` briefly while the user is resizing the window */
+      @media (max-width: 768px) {
+        body.is-resizing nav {
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+      }
+
       /* --- 3. Botões (CTA) --- */
       .cta-button {
         display: inline-block;

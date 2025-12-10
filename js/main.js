@@ -234,6 +234,7 @@ let focusableElements = [];
 let firstFocusable = null;
 let lastFocusable = null;
 let focusTrapHandler = null;
+let resizeTimeout = null; // debounce for resize
 
 function openMenu() {
   previousActiveElement = document.activeElement;
@@ -328,6 +329,30 @@ if (menuToggle && nav) {
   if (menuOverlay) {
     menuOverlay.addEventListener("click", closeMenu);
   }
+
+  // Hide nav and close it during resize to prevent it appearing while the layout changes
+  window.addEventListener("resize", () => {
+    try {
+      document.body.classList.add("is-resizing");
+      if (nav && nav.classList.contains("active")) closeMenu();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        document.body.classList.remove("is-resizing");
+      }, 300);
+    } catch (e) {}
+  });
+
+  // Also handle orientationchange for mobile devices
+  window.addEventListener("orientationchange", () => {
+    try {
+      document.body.classList.add("is-resizing");
+      if (nav && nav.classList.contains("active")) closeMenu();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        document.body.classList.remove("is-resizing");
+      }, 300);
+    } catch (e) {}
+  });
 } else {
   // Defensive fallback: if elements missing, no-op
   console.warn("Menu elements not found: menuToggle or nav missing.");
