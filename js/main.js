@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initPortfolioSlider();
   initScrollAnimations();
   initNavScrollSpy();
+  // Ensure the mobile nav is closed on initial load to avoid accidental open state
+  try {
+    if (nav && nav.classList.contains("active")) {
+      closeMenu();
+    }
+  } catch (e) {}
 });
 
 function initPortfolioSlider() {
