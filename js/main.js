@@ -240,6 +240,7 @@ let focusableElements = [];
 let firstFocusable = null;
 let lastFocusable = null;
 let focusTrapHandler = null;
+let ignoreOpenUntil = 0; // timestamp to suppress opening during resize/transition
 
 function openMenu() {
   previousActiveElement = document.activeElement;
@@ -314,6 +315,8 @@ function closeMenu() {
 // toggle opens/closes (guarded)
 if (menuToggle && nav) {
   menuToggle.addEventListener("click", () => {
+    // Prevent accidental opens immediately after a resize/orientation change
+    if (Date.now() < ignoreOpenUntil) return;
     if (nav.classList.contains("active")) {
       closeMenu();
     } else {
@@ -339,7 +342,32 @@ if (menuToggle && nav) {
   // close the mobile nav to prevent layout breaks or a stuck overlay.
   const DESKTOP_BREAKPOINT = 768; // must match the CSS mobile breakpoint
   let previousWidth = window.innerWidth;
+  // Debounced resize handler to prevent rapid toggles while resizing window
+  let resizeTimeout = null;
   window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      try {
+        const currentWidth = window.innerWidth;
+        // If we've crossed the breakpoint boundary, ensure the mobile menu is closed
+        const crossedToMobile = previousWidth > DESKTOP_BREAKPOINT && currentWidth <= DESKTOP_BREAKPOINT;
+        const crossedToDesktop = previousWidth <= DESKTOP_BREAKPOINT && currentWidth > DESKTOP_BREAKPOINT;
+        if ((crossedToMobile || crossedToDesktop) && nav.classList.contains("active")) {
+          // Ignore open for a short while to prevent flicker
+          ignoreOpenUntil = Date.now() + 500;
+          closeMenu();
+        }
+        // If the browser shrinks (reduce width) make sure the menu is hidden
+        if (currentWidth <= DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
+          ignoreOpenUntil = Date.now() + 500;
+          closeMenu();
+        }
+        previousWidth = currentWidth;
+      } catch (e) {
+        // ignore errors if nav isn't ready
+      }
+    }, 120);
+  });
     try {
       const currentWidth = window.innerWidth;
       // If we've crossed the breakpoint boundary, ensure the mobile menu is closed
@@ -361,6 +389,7 @@ if (menuToggle && nav) {
       setTimeout(() => {
         const currentWidth = window.innerWidth;
         if (nav.classList.contains("active")) {
+          ignoreOpenUntil = Date.now() + 500;
           closeMenu();
         }
         previousWidth = currentWidth;
