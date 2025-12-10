@@ -414,6 +414,29 @@ if (menuToggle && nav) {
   } catch (e) {
     // matchMedia may not be available in some environments (older browsers)
   }
+
+  // Observe nav class mutations and make sure it doesn't become active on mobile widths
+  try {
+    if (nav) {
+      const navObserver = new MutationObserver((mutations) => {
+        mutations.forEach((m) => {
+          if (m.attributeName === "class") {
+            const isActive = nav.classList.contains("active");
+            const isMobile = window.innerWidth <= DESKTOP_BREAKPOINT;
+            if (isActive && isMobile) {
+              // If nav becomes active on mobile without user action, close it immediately
+              console.debug("nav: active class added while mobile breakpoint; auto-closing.");
+              ignoreOpenUntil = Date.now() + 500;
+              closeMenu();
+            }
+          }
+        });
+      });
+      navObserver.observe(nav, { attributes: true, attributeFilter: ["class"] });
+    }
+  } catch (e) {
+    // ignore
+  }
 } else {
   // Defensive fallback: if elements missing, no-op
   console.warn("Menu elements not found: menuToggle or nav missing.");
