@@ -396,6 +396,24 @@ if (menuToggle && nav) {
       }, 200);
     } catch (e) {}
   });
+
+  // Extra robust solution: use matchMedia to catch breakpoint changes triggered by devtools
+  try {
+    const mq = window.matchMedia(`(max-width: ${DESKTOP_BREAKPOINT}px)`);
+    const mqHandler = (e) => {
+      if (e.matches && nav.classList.contains("active")) {
+        ignoreOpenUntil = Date.now() + 500;
+        closeMenu();
+      }
+    };
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", mqHandler);
+    } else if (typeof mq.addListener === "function") {
+      mq.addListener(mqHandler);
+    }
+  } catch (e) {
+    // matchMedia may not be available in some environments (older browsers)
+  }
 } else {
   // Defensive fallback: if elements missing, no-op
   console.warn("Menu elements not found: menuToggle or nav missing.");
