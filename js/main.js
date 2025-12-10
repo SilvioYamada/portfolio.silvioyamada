@@ -328,6 +328,28 @@ if (menuToggle && nav) {
   if (menuOverlay) {
     menuOverlay.addEventListener("click", closeMenu);
   }
+
+  // If the viewport is resized to desktop width while the nav is still open,
+  // close the mobile nav to prevent layout breaks or a stuck overlay.
+  const DESKTOP_BREAKPOINT = 768; // must match the CSS mobile breakpoint
+  window.addEventListener("resize", () => {
+    try {
+      if (window.innerWidth > DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
+        closeMenu();
+      }
+    } catch (e) {
+      // ignore errors if nav isn't ready
+    }
+  });
+
+  // Close menu on orientation change as well (some devices switch from mobile to desktop layout)
+  window.addEventListener("orientationchange", () => {
+    try {
+      if (window.innerWidth > DESKTOP_BREAKPOINT && nav.classList.contains("active")) {
+        closeMenu();
+      }
+    } catch (e) {}
+  });
 } else {
   // Defensive fallback: if elements missing, no-op
   console.warn("Menu elements not found: menuToggle or nav missing.");
