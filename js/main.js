@@ -425,7 +425,7 @@ if (menuToggle && nav) {
             const isMobile = window.innerWidth <= DESKTOP_BREAKPOINT;
             if (isActive && isMobile) {
               // If nav becomes active on mobile without user action, close it immediately
-              console.debug("nav: active class added while mobile breakpoint; auto-closing.");
+              console.warn("nav: active class added while mobile breakpoint; auto-closing.");
               ignoreOpenUntil = Date.now() + 500;
               closeMenu();
             }
