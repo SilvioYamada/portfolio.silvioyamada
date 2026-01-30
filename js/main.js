@@ -381,7 +381,7 @@ const TRANSLATIONS = {
       "Estou sempre aberto a novas oportunidades e projetos que exijam uma combinação de visão de design e profundidade técnica. Entre em contato!",
     "contact.linkedin": "LinkedIn",
     "contact.whatsapp": "WhatsApp",
-    "footer.text": "📏 Desenvolvido por Silvio | UI/UX Designer © 2025",
+    "footer.text": "📏 Desenvolvido por Silvio | UI/UX Designer © 2026",
     "portfolio.subtitle":
       "Uma seleção de trabalhos que demonstram meu processo, da pesquisa ao pixel final.",
     "cta.portfolio": "Veja Meu Portfólio",
@@ -601,7 +601,7 @@ const TRANSLATIONS = {
       "I’m open to new opportunities and projects that require both design vision and technical depth. Get in touch!",
     "contact.linkedin": "LinkedIn",
     "contact.whatsapp": "WhatsApp",
-    "footer.text": "📏 Built by Silvio | UI/UX Designer © 2025",
+    "footer.text": "📏 Built by Silvio | UI/UX Designer © 2026",
   },
 };
 
