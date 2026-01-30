@@ -208,7 +208,7 @@ function initNavScrollSpy() {
       .sort(
         (a, b) =>
           Math.abs(a.boundingClientRect.top) -
-          Math.abs(b.boundingClientRect.top)
+          Math.abs(b.boundingClientRect.top),
       );
 
     if (!visibleSections.length) return;
@@ -248,8 +248,8 @@ function openMenu() {
   // setup focusable elements inside nav
   focusableElements = Array.from(
     nav.querySelectorAll(
-      'a, button, input, textarea, [tabindex]:not([tabindex="-1"])'
-    )
+      'a, button, input, textarea, [tabindex]:not([tabindex="-1"])',
+    ),
   ).filter((el) => !el.hasAttribute("disabled"));
   firstFocusable = focusableElements[0] || nav;
   lastFocusable = focusableElements[focusableElements.length - 1] || nav;
